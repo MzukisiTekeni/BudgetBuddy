@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_padding">
+
+        <!-- Back button -->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/icon_lg"
+            android:layout_height="@dimen/icon_lg"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:src="@drawable/ic_back_arrow"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Back" />
+
+        <!-- App logo / coin icon -->
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_quick_action">
+
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="💰"
+                android:textSize="48sp" />-->
+            <ImageView
+                android:id="@+id/iv_welcome_illustration"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/bb_logo_1_1"
+                android:contentDescription="Welcome illustration" />
+        </FrameLayout>
+
+        <!-- App name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:text="@string/app_name"
+            android:textSize="@dimen/text_xxl"
+            android:textColor="@color/primary"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold" />
+
+        <!-- Username -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxl"
+            android:text="@string/label_username"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/et_username"
+            style="@style/Style.InputField"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:hint="@string/hint_login_username"
+            android:inputType="text"
+            android:imeOptions="actionNext" />
+
+        <!-- Password -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:text="@string/label_password"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:layout_marginTop="@dimen/spacing_xs">
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_input_field"
+                android:hint="@string/hint_login_password"
+                android:textSize="@dimen/text_body"
+                android:textColorHint="@color/text_hint"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="48dp"
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_toggle_password"
+                android:layout_width="@dimen/icon_md"
+                android:layout_height="@dimen/icon_md"
+                android:src="@drawable/ic_eye"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Toggle password"
+                android:layout_marginEnd="@dimen/spacing_base"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Forgot password -->
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="@string/forgot_password"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_secondary"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Log In button -->
+        <Button
+            android:id="@+id/btn_log_in"
+            style="@style/Style.PrimaryButton"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:text="@string/btn_log_in" />
+
+        <!-- Don't have account -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_base">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dont_have_account"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tv_go_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_register_link"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

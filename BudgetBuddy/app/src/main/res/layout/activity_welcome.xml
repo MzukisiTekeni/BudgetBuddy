@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/surface"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/screen_padding">
+
+    <!-- Hero illustration placeholder -->
+    <FrameLayout
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_marginTop="48dp"
+        android:layout_gravity="center_horizontal">
+        <!-- Replace with your Lottie / ImageView illustration -->
+        <ImageView
+            android:id="@+id/iv_welcome_illustration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/manage_money_bro_1"
+            android:contentDescription="Welcome illustration" />
+    </FrameLayout>
+
+    <!-- Welcome text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xl"
+        android:text="@string/welcome_to"
+        android:textSize="@dimen/text_lg"
+        android:textColor="@color/text_secondary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="@dimen/text_display"
+        android:textColor="@color/primary"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:text="@string/app_tagline"
+        android:textSize="@dimen/text_sm"
+        android:textColor="@color/text_hint" />
+
+    <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+
+    <!-- Get Started button -->
+    <Button
+        android:id="@+id/btn_get_started"
+        style="@style/Style.PrimaryButton"
+        android:text="@string/btn_get_started"
+        android:layout_marginBottom="@dimen/spacing_md" />
+
+    <!-- Log In button -->
+    <Button
+        android:id="@+id/btn_log_in"
+        style="@style/Style.OutlineButton"
+        android:text="@string/btn_log_in"
+        android:layout_marginBottom="@dimen/spacing_xl" />
+
+    <!-- Privacy text -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/spacing_xl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/privacy_prefix"
+            android:textSize="@dimen/text_xs"
+            android:textColor="@color/text_hint"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_privacy_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/privacy_link"
+            android:textSize="@dimen/text_xs"
+            android:textColor="@color/primary"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+</LinearLayout>

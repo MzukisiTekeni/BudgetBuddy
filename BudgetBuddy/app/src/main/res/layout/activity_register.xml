@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_padding">
+
+        <!-- Top bar -->
+        <include layout="@layout/component_simple_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Heading -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="@string/create_free_account"
+            android:textSize="28sp"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold" />
+
+        <!-- Username -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="@string/label_username"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/et_username"
+            style="@style/Style.InputField"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:hint="@string/hint_username"
+            android:inputType="text"
+            android:imeOptions="actionNext" />
+
+        <!-- Email -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:text="@string/label_email"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/et_email"
+            style="@style/Style.InputField"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext" />
+
+        <!-- Password -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:text="@string/label_password"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:layout_marginTop="@dimen/spacing_xs">
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_input_field"
+                android:hint="@string/hint_password"
+                android:textSize="@dimen/text_body"
+                android:textColorHint="@color/text_hint"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="48dp"
+                android:inputType="textPassword"
+                android:imeOptions="actionNext"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+            <ImageView
+                android:id="@+id/iv_toggle_password"
+                android:layout_width="@dimen/icon_md"
+                android:layout_height="@dimen/icon_md"
+                android:src="@drawable/ic_eye"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Toggle password visibility"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/spacing_base"
+                xmlns:app="http://schemas.android.com/apk/res-auto"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Confirm Password -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:text="@string/label_confirm_password"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:layout_marginTop="@dimen/spacing_xs"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <EditText
+                android:id="@+id/et_confirm_password"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_input_field"
+                android:hint="@string/hint_confirm_password"
+                android:textSize="@dimen/text_body"
+                android:textColorHint="@color/text_hint"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="48dp"
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_toggle_confirm"
+                android:layout_width="@dimen/icon_md"
+                android:layout_height="@dimen/icon_md"
+                android:src="@drawable/ic_eye"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Toggle confirm password visibility"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/spacing_base"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Register button -->
+        <Button
+            android:id="@+id/btn_register"
+            style="@style/Style.PrimaryButton"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="@string/btn_register" />
+
+        <!-- Already have account -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:layout_marginBottom="@dimen/spacing_xl">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/already_have_account"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tv_go_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xs"
+                android:text="@string/btn_log_in"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
