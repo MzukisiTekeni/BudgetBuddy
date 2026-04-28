@@ -8,6 +8,7 @@ What is BudgetBuddy?
 BudgetBuddy is a friendly finance tracking app that helps you take control of your money without the stress. Whether you want to save for something special, pay off debt, or just understand where your money goes each month, BudgetBuddy makes budgeting simple, visual, and even enjoyable.
 
 Screens and Features
+
 Welcome Screen
 This is where your journey begins. You can either create a new account or sign in if you're already a member. It's a warm, simple entry point to the app.
 
