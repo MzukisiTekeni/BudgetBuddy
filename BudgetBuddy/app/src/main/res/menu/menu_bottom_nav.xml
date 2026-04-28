@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_home" android:icon="@drawable/house_svgrepo_com_2" android:title="@string/nav_home"/>
+    <item android:id="@+id/nav_expenses" android:icon="@drawable/svgrepo_iconcarrier" android:title="@string/nav_expenses"/>
+    <item android:id="@+id/nav_stats" android:icon="@drawable/bar_chart_svgrepo_com" android:title="@string/nav_stats"/>
+    <item android:id="@+id/nav_savings" android:icon="@drawable/target_svgrepo_com_1" android:title="@string/nav_savings"/>
+    <item android:id="@+id/nav_profile" android:icon="@drawable/user_avatar_svgrepo_com_1" android:title="@string/nav_profile"/>
+</menu>
