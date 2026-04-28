@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    item_savings_goal_card.xml
+    One card in the Savings Goals RecyclerView.
+    Adds a "Add / Withdraw" button at the bottom for active goals.
+    Long-press still marks the goal complete.
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_base">
+
+        <!-- Goal name -->
+        <TextView
+            android:id="@+id/tv_goal_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold" />
+
+        <!-- Due / completed label -->
+        <TextView
+            android:id="@+id/tv_goal_due"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="@dimen/text_xs"
+            android:textColor="@color/text_hint" />
+
+        <!-- Saved / of target row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_goal_saved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_xl"
+                android:textColor="@color/primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_goal_target"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary" />
+
+            <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_goal_remaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+
+        <!-- Progress bar -->
+        <ProgressBar
+            android:id="@+id/progress_goal"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:max="100"
+            android:progressDrawable="@drawable/progress_bar_green" />
+
+        <!-- Percent label -->
+        <TextView
+            android:id="@+id/tv_goal_percent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="@dimen/text_xs"
+            android:textColor="@color/text_hint"
+            android:gravity="end" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:layout_marginBottom="@dimen/spacing_xs"
+            android:background="@color/divider_line" />
+
+        <!--
+            Contribution button — hidden for completed goals.
+            GoalAdapter sets visibility = GONE when goal.isCompleted == true.
+        -->
+        <TextView
+            android:id="@+id/btn_add_contribution"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:text="💰  Add / Withdraw"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/primary"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:background="@drawable/bg_chip_unselected"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

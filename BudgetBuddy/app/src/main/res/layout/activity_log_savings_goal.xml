@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_padding">
+
+        <include layout="@layout/component_simple_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Amount card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            app:cardCornerRadius="@dimen/card_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:cardBackgroundColor="@color/surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/spacing_lg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_amount"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_secondary" />
+
+                <EditText
+                    android:id="@+id/et_goal_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/default_amount"
+                    android:textSize="36sp"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@android:color/transparent"
+                    android:inputType="numberDecimal" />
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="2dp"
+                    android:background="@color/primary" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Goal name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:text="@string/label_goal_name"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/et_goal_name"
+            style="@style/Style.InputField"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:hint="@string/hint_goal_name"
+            android:inputType="text"
+            android:imeOptions="actionNext" />
+
+        <!-- Target date -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:text="@string/label_target_date"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_date_picker"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@drawable/bg_input_field"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/tv_target_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_date"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_hint"
+                android:paddingStart="@dimen/spacing_base"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_cal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_cal"
+                android:layout_width="@dimen/icon_md"
+                android:layout_height="@dimen/icon_md"
+                android:src="@drawable/ic_calendar"
+                android:layout_marginEnd="@dimen/spacing_base"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Save how often -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:text="@string/label_save_how_often"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_sm">
+
+            <TextView
+                android:id="@+id/chip_weekly"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/chip_weekly"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/chip_monthly"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
+                android:background="@drawable/bg_chip_selected"
+                android:text="@string/chip_monthly"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_on_primary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/chip_custom"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/chip_custom"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- XP tip -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base">
+
+            <ImageView
+                android:id="@+id/iv_xp_star"
+                android:layout_width="@dimen/icon_sm"
+                android:layout_height="@dimen/icon_sm"
+                android:src="@drawable/ic_star"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xs"
+                android:text="@string/xp_goal_tip"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                app:layout_constraintStart_toEndOf="@id/iv_xp_star"
+                app:layout_constraintEnd_toStartOf="@id/tv_goal_xp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_goal_xp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/xp_goal_value"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/xp_yellow"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Create goal button -->
+        <Button
+            android:id="@+id/btn_create_goal"
+            style="@style/Style.PrimaryButton"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="@string/btn_create_goal" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

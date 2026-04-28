@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    COMPONENT: component_bottom_nav.xml
+    REUSABLE: Include at the bottom of any activity layout using:
+      <include layout="@layout/component_bottom_nav" />
+
+    The selected state is controlled programmatically or via BottomNavigationView.
+    To highlight a tab, call bottomNav.selectedItemId = R.id.nav_home (etc.)
+
+    NAV ITEM IDs:
+      - nav_home      → Home (Dashboard)
+      - nav_expenses  → Expenses
+      - nav_stats     → Stats
+      - nav_savings   → Savings
+      - nav_profile   → Profile
+-->
+<com.google.android.material.bottomnavigation.BottomNavigationView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_nav"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bottom_nav_height"
+    android:background="@drawable/bg_bottom_nav"
+    app:menu="@menu/menu_bottom_nav"
+    app:labelVisibilityMode="labeled"
+    app:itemIconTint="@color/selector_nav_item"
+    app:itemTextColor="@color/selector_nav_item"
+    app:itemTextAppearanceActive="@style/TextStyle.NavActive"
+    app:itemTextAppearanceInactive="@style/TextStyle.NavInactive"
+    app:itemIconSize="@dimen/icon_md"
+    app:elevation="8dp" />

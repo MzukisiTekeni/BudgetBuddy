@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Dialog layout for contributing to / withdrawing from a savings goal.
+    Used by SavingsGoalsActivity.showContributionDialog().
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Goal progress summary -->
+    <TextView
+        android:id="@+id/tv_contribution_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/text_secondary"
+        android:lineSpacingMultiplier="1.4"
+        android:background="@color/background"
+        android:padding="10dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Add / Withdraw toggle -->
+    <RadioGroup
+        android:id="@+id/rg_contribution_direction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <RadioButton
+            android:id="@+id/rb_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="➕ Add money"
+            android:textSize="14sp"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/rb_withdraw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="↩️ Withdraw"
+            android:textSize="14sp" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount (R)"
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/et_contribution_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="0.00"
+        android:textSize="22sp"
+        android:textColor="@color/text_primary"
+        android:background="@drawable/bg_input_field"
+        android:padding="12dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Adding money deducts from your overall monthly budget. Withdrawing returns it."
+        android:textSize="11sp"
+        android:textColor="@color/text_hint"
+        android:lineSpacingMultiplier="1.3" />
+
+</LinearLayout>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    COMPONENT: component_card_streak_goals.xml
+    REUSABLE: Include with:
+      <include layout="@layout/component_card_streak_goals" />
+
+    VIEW IDs:
+      - tv_streak_count   → Number of days (e.g. "12")
+      - tv_streak_label   → Subtitle (e.g. "logging streak")
+      - tv_goals_count    → Goals fraction (e.g. "4/6")
+      - tv_goals_label    → Subtitle (e.g. "goals on track")
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="2"
+    android:gravity="fill_horizontal">
+
+    <!-- Streak Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_streak"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginEnd="@dimen/spacing_sm"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardBackgroundColor="@color/surface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding">
+
+            <!-- Fire icon row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔥"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <!-- Streak number -->
+            <TextView
+                android:id="@+id/tv_streak_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="12"
+                android:textSize="@dimen/text_xxl"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold" />
+
+            <!-- Days label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_label"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/tv_streak_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/logging_streak"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_hint" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Goals Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_goals"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/spacing_sm"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardBackgroundColor="@color/surface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding">
+
+            <!-- Target/Goal icon -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎯"
+                android:textSize="18sp" />
+
+            <!-- Goals fraction -->
+            <TextView
+                android:id="@+id/tv_goals_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/goals_label"
+                android:textSize="@dimen/text_xxl"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/tv_goals_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/goals_sub"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_hint" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select the data you want to permanently delete:"
+        android:textSize="13sp"
+        android:textColor="#6B7280"
+        android:layout_marginBottom="16dp"
+        android:lineSpacingMultiplier="1.3" />
+
+    <!-- Option 1 -->
+    <CheckBox
+        android:id="@+id/cb_expenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="💸  Expenses &amp; spending history"
+        android:textSize="14sp"
+        android:textColor="#1A1A2E"
+        android:paddingStart="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="      Also clears Statistics graph and Budget Health"
+        android:textSize="11sp"
+        android:textColor="#9CA3AF"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="8dp" />
+
+    <!-- Option 2 -->
+    <CheckBox
+        android:id="@+id/cb_budgets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="📊  Category budgets"
+        android:textSize="14sp"
+        android:textColor="#1A1A2E"
+        android:paddingStart="8dp" />
+
+    <!-- Option 3 -->
+    <CheckBox
+        android:id="@+id/cb_goals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="🎯  Savings goals"
+        android:textSize="14sp"
+        android:textColor="#1A1A2E"
+        android:paddingStart="8dp" />
+
+    <!-- Option 4 -->
+    <CheckBox
+        android:id="@+id/cb_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="🔔  Notifications"
+        android:textSize="14sp"
+        android:textColor="#1A1A2E"
+        android:paddingStart="8dp" />
+
+    <!-- Option 5 -->
+    <CheckBox
+        android:id="@+id/cb_overall_budget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="💰  Overall monthly budget amount"
+        android:textSize="14sp"
+        android:textColor="#1A1A2E"
+        android:paddingStart="8dp" />
+
+</LinearLayout>

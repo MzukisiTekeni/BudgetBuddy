@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_profile.xml — unchanged except for:
+    1. tv_notif_badge added over the bell icon in the top bar area (if you have one)
+    2. row_clear_data settings row added between Privacy and Sign out
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingBottom="@dimen/spacing_base">
+
+        <include layout="@layout/component_simple_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/screen_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- User info row -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <FrameLayout
+                    android:id="@+id/fl_avatar"
+                    android:layout_width="@dimen/avatar_size_lg"
+                    android:layout_height="@dimen/avatar_size_lg"
+                    android:background="@drawable/bg_avatar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <TextView
+                        android:id="@+id/tv_avatar_initials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="MT"
+                        android:textColor="@color/text_on_primary"
+                        android:textSize="@dimen/text_xl"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_user_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_base"
+                    app:layout_constraintStart_toEndOf="@id/fl_avatar"
+                    app:layout_constraintEnd_toStartOf="@id/tv_level_badge"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User"
+                        android:textSize="@dimen/text_lg"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/member_since"
+                        android:textSize="@dimen/text_xs"
+                        android:textColor="@color/text_hint" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_level_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_level_badge"
+                    android:text="★ Lv 1"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/xp_yellow"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingStart="@dimen/spacing_sm"
+                    android:paddingEnd="@dimen/spacing_sm"
+                    android:paddingTop="@dimen/spacing_xs"
+                    android:paddingBottom="@dimen/spacing_xs"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Stats row -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_base"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_base"
+                    android:weightSum="3">
+
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tv_day_streak"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="0" android:textSize="@dimen/text_xxl"
+                            android:textColor="@color/text_primary" android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/label_day_streak" android:textSize="@dimen/text_xs" android:textColor="@color/text_hint" />
+                    </LinearLayout>
+
+                    <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/divider_line" />
+
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tv_total_xp"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="0" android:textSize="@dimen/text_xxl"
+                            android:textColor="@color/text_primary" android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/label_total_xp" android:textSize="@dimen/text_xs" android:textColor="@color/text_hint" />
+                    </LinearLayout>
+
+                    <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/divider_line" />
+
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tv_total_saved"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="R0" android:textSize="@dimen/text_xxl"
+                            android:textColor="@color/text_primary" android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/label_saved" android:textSize="@dimen/text_xs" android:textColor="@color/text_hint" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- XP / Badges / Themes tabs card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_base"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView android:id="@+id/tab_xp"
+                            android:layout_width="0dp" android:layout_height="36dp" android:layout_weight="1"
+                            android:background="@drawable/bg_chip_selected"
+                            android:text="@string/tab_xp" android:textSize="@dimen/text_sm"
+                            android:textColor="@color/text_on_primary" android:gravity="center"
+                            android:clickable="true" android:focusable="true" />
+
+                        <TextView android:id="@+id/tab_badges"
+                            android:layout_width="0dp" android:layout_height="36dp" android:layout_weight="1"
+                            android:background="@drawable/bg_chip_unselected"
+                            android:text="@string/tab_badges" android:textSize="@dimen/text_sm"
+                            android:textColor="@color/text_secondary" android:gravity="center"
+                            android:clickable="true" android:focusable="true" />
+
+                        <TextView android:id="@+id/tab_themes"
+                            android:layout_width="0dp" android:layout_height="36dp" android:layout_weight="1"
+                            android:background="@drawable/bg_chip_unselected"
+                            android:text="@string/tab_themes" android:textSize="@dimen/text_sm"
+                            android:textColor="@color/text_secondary" android:gravity="center"
+                            android:clickable="true" android:focusable="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/panel_xp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/spacing_base">
+
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/label_level"
+                            android:textSize="@dimen/text_sm" android:textColor="@color/text_primary"
+                            android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_xp"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/progress_height_sm"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:max="100" android:progress="0"
+                            android:progressDrawable="@drawable/progress_bar_green" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="@string/xp_progress_label"
+                                android:textSize="@dimen/text_xs" android:textColor="@color/text_hint"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="@string/xp_next_level"
+                                android:textSize="@dimen/text_xs" android:textColor="@color/text_hint"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_base"
+                            android:text="@string/section_how_to_earn"
+                            android:textSize="@dimen/text_sm" android:textColor="@color/text_hint" />
+
+                        <include layout="@layout/item_xp_earn_row" android:id="@+id/row_log_expense"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm" />
+
+                        <include layout="@layout/item_xp_earn_row" android:id="@+id/row_stay_budget"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs" />
+
+                        <include layout="@layout/item_xp_earn_row" android:id="@+id/row_complete_goal"
+                            android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Settings card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xl"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_sm"
+                        android:text="@string/section_settings"
+                        android:textSize="@dimen/text_body" android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+
+                    <include layout="@layout/item_settings_row" android:id="@+id/row_notifications"
+                        android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/divider_line" android:layout_marginVertical="@dimen/spacing_xs" />
+
+                    <include layout="@layout/item_settings_row" android:id="@+id/row_currency"
+                        android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/divider_line" android:layout_marginVertical="@dimen/spacing_xs" />
+
+                    <include layout="@layout/item_settings_row" android:id="@+id/row_privacy"
+                        android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/divider_line" android:layout_marginVertical="@dimen/spacing_xs" />
+
+                    <include layout="@layout/item_settings_row" android:id="@+id/row_clear_data"
+                        android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/divider_line" android:layout_marginVertical="@dimen/spacing_xs" />
+
+                    <include layout="@layout/item_settings_row" android:id="@+id/row_signout"
+                        android:layout_width="match_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

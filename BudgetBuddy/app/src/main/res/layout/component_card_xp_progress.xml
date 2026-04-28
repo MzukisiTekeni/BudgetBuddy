@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    COMPONENT: component_card_xp_progress.xml
+    REUSABLE: Include with:
+      <include layout="@layout/component_card_xp_progress" />
+
+    VIEW IDs:
+      - tv_xp_count       → "1,340 of 2000 XP"
+      - progress_xp       → ProgressBar (max=2000, progress=1340)
+      - tv_xp_hint        → "660 XP to unlock Midnight theme"
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_xp_progress"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/card_padding">
+
+        <!-- Row: Star icon + Label + XP count -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Star icon badge -->
+            <FrameLayout
+                android:id="@+id/fl_xp_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_xp_badge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="★"
+                    android:textSize="14sp"
+                    android:textColor="@color/xp_yellow" />
+            </FrameLayout>
+
+            <!-- XP Progress label -->
+            <TextView
+                android:id="@+id/tv_xp_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:text="@string/xp_progress"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/fl_xp_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_xp_count" />
+
+            <!-- XP Count -->
+            <TextView
+                android:id="@+id/tv_xp_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/xp_count"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- XP Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progress_xp"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/progress_height_sm"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:max="2000"
+            android:progress="1340"
+            android:progressDrawable="@drawable/progress_bar_xp" />
+
+        <!-- Unlock hint -->
+        <TextView
+            android:id="@+id/tv_xp_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="@string/xp_unlock_hint"
+            android:textSize="@dimen/text_xs"
+            android:textColor="@color/text_hint" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

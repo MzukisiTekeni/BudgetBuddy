@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="88dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- TOP BAR -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@color/background"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <ImageView
+                    android:id="@+id/iv_notification"
+                    android:layout_width="28dp" android:layout_height="28dp"
+                    android:src="@drawable/ic_notification"
+                    android:contentDescription="Notifications"
+                    android:clickable="true" android:focusable="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_page_title"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Dashboard"
+                    android:textSize="16sp" android:textColor="@color/text_primary"
+                    android:fontFamily="sans-serif-medium" android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <FrameLayout
+                    android:id="@+id/fl_avatar"
+                    android:layout_width="40dp" android:layout_height="40dp"
+                    android:background="@drawable/bg_avatar"
+                    android:clickable="true" android:focusable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <TextView
+                        android:id="@+id/tv_avatar_initials"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_gravity="center" android:text="MT"
+                        android:textColor="@color/text_on_primary" android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- CARDS SECTION -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp" android:paddingEnd="16dp" android:paddingTop="4dp">
+
+                <!-- BUDGET SUMMARY CARD -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_budget_summary"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp" app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/surface">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="16dp">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="Budget this Month" android:textSize="12sp" android:textColor="@color/text_secondary"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+                            <Button android:id="@+id/btn_view_budget"
+                                android:layout_width="wrap_content" android:layout_height="32dp"
+                                android:background="@drawable/bg_pill_button"
+                                android:text="View budget→" android:textColor="@color/text_on_primary" android:textSize="11sp"
+                                android:paddingStart="12dp" android:paddingEnd="12dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView android:id="@+id/tv_budget_amount"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp" android:text="R0.00"
+                            android:textSize="30sp" android:textColor="@color/text_primary"
+                            android:fontFamily="sans-serif-medium" android:textStyle="bold"/>
+                        <ProgressBar android:id="@+id/progress_budget"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent" android:layout_height="8dp"
+                            android:layout_marginTop="8dp" android:max="100" android:progress="60"
+                            android:progressDrawable="@drawable/progress_bar_green"/>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+                            <TextView android:id="@+id/tv_remaining"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="R4,400 remaining" android:textSize="10sp" android:textColor="@color/text_secondary"
+                                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+                            <TextView android:id="@+id/tv_percent_used"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="60% used" android:textSize="10sp" android:textColor="@color/text_secondary"
+                                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- XP PROGRESS CARD -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_xp"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="16dp" app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/surface">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="16dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                        <TextView android:id="@+id/btn_view_profile1"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="View profile →" android:textSize="12sp" android:textColor="@color/primary"
+                        android:fontFamily="sans-serif-medium" android:clickable="true" android:focusable="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <FrameLayout android:id="@+id/fl_xp_icon"
+                                android:layout_width="30dp" android:layout_height="30dp"
+                                android:background="@drawable/bg_xp_badge"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent">
+
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                    android:layout_gravity="center" android:text="★"
+                                    android:textSize="14sp" android:textColor="@color/xp_yellow"/>
+                            </FrameLayout>
+
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp" android:text="XP progress"
+                                android:textSize="14sp" android:textColor="@color/text_primary"
+                                android:fontFamily="sans-serif-medium" android:textStyle="bold"
+                                app:layout_constraintStart_toEndOf="@id/fl_xp_icon"
+                                app:layout_constraintEnd_toStartOf="@id/tv_xp_count"
+                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+
+                            <TextView android:id="@+id/tv_xp_count"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="1,340 of 2000 XP" android:textSize="12sp" android:textColor="@color/text_secondary"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <ProgressBar android:id="@+id/progress_xp"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent" android:layout_height="5dp"
+                            android:layout_marginTop="8dp" android:max="2000" android:progress="1340"
+                            android:progressDrawable="@drawable/progress_bar_xp"/>
+                        <TextView android:id="@+id/tv_xp_hint"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp" android:text="660 XP to unlock Midnight theme"
+                            android:textSize="10sp" android:textColor="@color/text_hint"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- STREAK + GOALS ROW -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="12dp" android:weightSum="2">
+                    <androidx.cardview.widget.CardView android:id="@+id/card_streak"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginEnd="6dp"
+                        app:cardCornerRadius="16dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/surface">
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="vertical" android:padding="14dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🔥" android:textSize="20sp"/>
+                            <TextView android:id="@+id/tv_streak_count" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp" android:text="12" android:textSize="22sp"
+                                android:textColor="@color/text_primary" android:fontFamily="sans-serif-medium" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="Days" android:textSize="14sp" android:textColor="@color/text_primary"
+                                android:fontFamily="sans-serif-medium" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="logging streak" android:textSize="10sp" android:textColor="@color/text_hint"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView android:id="@+id/card_goals"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="6dp"
+                        app:cardCornerRadius="16dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/surface">
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="vertical" android:padding="14dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎯" android:textSize="20sp"/>
+                            <TextView android:id="@+id/tv_goals_count" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp" android:text="4/6" android:textSize="22sp"
+                                android:textColor="@color/text_primary" android:fontFamily="sans-serif-medium" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="goals on track" android:textSize="10sp" android:textColor="@color/text_hint"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ACHIEVEMENTS CARD -->
+                <androidx.cardview.widget.CardView android:id="@+id/card_achievements"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:cardCornerRadius="16dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/surface">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:padding="16dp">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="Achievements" android:textSize="14sp" android:textColor="@color/text_primary"
+                                android:fontFamily="sans-serif-medium" android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+                            <TextView android:id="@+id/btn_view_profile"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="View profile →" android:textSize="12sp" android:textColor="@color/primary"
+                                android:fontFamily="sans-serif-medium" android:clickable="true" android:focusable="true"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:orientation="horizontal" android:layout_marginTop="12dp" android:weightSum="4">
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                                <FrameLayout android:layout_width="44dp" android:layout_height="44dp" android:background="@drawable/bg_badge_circle">
+                                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🏆" android:textSize="20sp"/>
+                                </FrameLayout>
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="First budget" android:textSize="9sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                                <FrameLayout android:layout_width="44dp" android:layout_height="44dp" android:background="@drawable/bg_streak_badge">
+                                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="🔥" android:textSize="20sp"/>
+                                </FrameLayout>
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="7-day streak" android:textSize="9sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                                <FrameLayout android:layout_width="44dp" android:layout_height="44dp" android:background="@drawable/bg_xp_badge">
+                                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="💰" android:textSize="20sp"/>
+                                </FrameLayout>
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Saver" android:textSize="9sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                            </LinearLayout>
+                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                                <FrameLayout android:layout_width="44dp" android:layout_height="44dp" android:background="@drawable/bg_goal_circle">
+                                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="⭐" android:textSize="20sp"/>
+                                </FrameLayout>
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="All goals met" android:textSize="9sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- QUICK ACTIONS -->
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp" android:text="Quick Actions"
+                    android:textSize="16sp" android:textColor="@color/text_primary"
+                    android:fontFamily="sans-serif-medium" android:textStyle="bold"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:weightSum="3" android:layout_marginBottom="8dp">
+                    <LinearLayout android:id="@+id/action_add_categories" android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_quick_action"
+                        android:orientation="vertical" android:gravity="center" android:padding="12dp" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="＋" android:textSize="22sp" android:textColor="@color/primary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Add Expense\nCategories" android:textSize="10sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    </LinearLayout>
+                    <LinearLayout android:id="@+id/action_set_budget" android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="4dp" android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_quick_action" android:orientation="vertical" android:gravity="center"
+                        android:padding="12dp" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💰" android:textSize="22sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Set Monthly\nBudget" android:textSize="10sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    </LinearLayout>
+                    <LinearLayout android:id="@+id/action_add_expense" android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="4dp" android:background="@drawable/bg_quick_action"
+                        android:orientation="vertical" android:gravity="center" android:padding="12dp" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="＋" android:textSize="22sp" android:textColor="@color/primary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Add\nExpense" android:textSize="10sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:weightSum="3" android:layout_marginBottom="24dp">
+                    <LinearLayout android:id="@+id/action_savings_goals" android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginEnd="4dp" android:background="@drawable/bg_quick_action"
+                        android:orientation="vertical" android:gravity="center" android:padding="12dp" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎯" android:textSize="22sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Create Savings\nGoals" android:textSize="10sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    </LinearLayout>
+                    <LinearLayout android:id="@+id/action_view_expenses" android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="4dp" android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_quick_action" android:orientation="vertical" android:gravity="center"
+                        android:padding="12dp" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📋" android:textSize="22sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="View All\nExpenses" android:textSize="10sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    </LinearLayout>
+                    <LinearLayout android:id="@+id/action_budget_health" android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:layout_marginStart="4dp" android:background="@drawable/bg_quick_action"
+                        android:orientation="vertical" android:gravity="center" android:padding="12dp" android:clickable="true" android:focusable="true">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="❤️" android:textSize="22sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Show Budget\nHealth" android:textSize="10sp" android:textColor="@color/text_secondary" android:gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- BOTTOM NAV -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent" android:layout_height="72dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_bottom_nav"
+        app:menu="@menu/menu_bottom_nav"
+        app:labelVisibilityMode="labeled"
+        app:itemIconTint="@null"
+        app:itemTextColor="@null"
+        app:itemIconSize="24dp"
+        app:elevation="8dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    COMPONENT: component_card_achievements.xml
+    REUSABLE: Include with:
+      <include layout="@layout/component_card_achievements" />
+
+    VIEW IDs:
+      - btn_view_profile         → "View profile →" clickable text
+      - tv_badge_first_budget    → First badge label
+      - tv_badge_streak          → Second badge label
+      - tv_badge_saver           → Third badge label
+      - tv_badge_goals           → Fourth badge label
+
+    Badges use emoji icons. Replace with ImageView + custom drawables
+    for production icon assets.
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_achievements"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/card_padding">
+
+        <!-- Header row: Achievements + View profile -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/achievements"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_view_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_profile"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/primary"
+                android:fontFamily="sans-serif-medium"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Badges Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:weightSum="4">
+
+            <!-- Badge 1: First Budget -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_badge_circle">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="🏆"
+                        android:textSize="20sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_badge_first_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/badge_first_budget"
+                    android:textSize="@dimen/text_xs"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <!-- Badge 2: 7-day streak -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_streak_badge">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="🔥"
+                        android:textSize="20sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_badge_streak"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/badge_streak"
+                    android:textSize="@dimen/text_xs"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <!-- Badge 3: Saver -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_xp_badge">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="💰"
+                        android:textSize="20sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_badge_saver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/badge_saver"
+                    android:textSize="@dimen/text_xs"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <!-- Badge 4: All goals met -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <FrameLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_goal_circle">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="⭐"
+                        android:textSize="20sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_badge_goals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/badge_all_goals"
+                    android:textSize="@dimen/text_xs"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

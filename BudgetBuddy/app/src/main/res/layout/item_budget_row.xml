@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    item_budget_row.xml
+    One row in the Monthly Budget RecyclerView.
+    Includes an edit (pencil) icon so users can tap to update the amount inline.
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_xs"
+    app:cardCornerRadius="@dimen/card_radius_sm"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/surface">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingStart="@dimen/spacing_base"
+        android:paddingEnd="@dimen/spacing_base">
+
+        <!-- Emoji -->
+        <TextView
+            android:id="@+id/tv_budget_emoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Category name -->
+        <TextView
+            android:id="@+id/tv_budget_category_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintStart_toEndOf="@id/tv_budget_emoji"
+            app:layout_constraintEnd_toStartOf="@id/tv_budget_amount_value"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Budget amount -->
+        <TextView
+            android:id="@+id/tv_budget_amount_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/primary"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            app:layout_constraintEnd_toStartOf="@id/iv_edit_budget"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Edit pencil -->
+        <ImageView
+            android:id="@+id/iv_edit_budget"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_edit"
+            android:alpha="0.5"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Edit budget"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

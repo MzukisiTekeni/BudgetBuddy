@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/surface"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingBottom="@dimen/spacing_base">
+
+        <!-- Title row with Clear all -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_bar_height">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/icon_lg"
+                android:layout_height="@dimen/icon_lg"
+                android:src="@drawable/ic_back_arrow"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_notifications"
+                android:textSize="@dimen/text_lg"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_clear_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_clear_all"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Filter tabs -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView android:id="@+id/tab_all"
+                android:layout_width="wrap_content" android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_selected"
+                android:text="@string/tab_all" android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_on_primary" android:gravity="center"
+                android:paddingStart="@dimen/spacing_base" android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView android:id="@+id/tab_alerts"
+                android:layout_width="wrap_content" android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/tab_alerts" android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary" android:gravity="center"
+                android:paddingStart="@dimen/spacing_base" android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView android:id="@+id/tab_nudges"
+                android:layout_width="wrap_content" android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/tab_nudges" android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary" android:gravity="center"
+                android:paddingStart="@dimen/spacing_base" android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView android:id="@+id/tab_insights"
+                android:layout_width="wrap_content" android:layout_height="34dp"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/tab_insights" android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary" android:gravity="center"
+                android:paddingStart="@dimen/spacing_base" android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Notifications list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingTop="@dimen/spacing_base"
+        android:paddingBottom="@dimen/spacing_base"
+        android:clipToPadding="false" />
+
+</LinearLayout>

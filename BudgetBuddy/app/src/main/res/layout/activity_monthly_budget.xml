@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/surface"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingBottom="@dimen/spacing_sm">
+
+        <include layout="@layout/component_simple_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Scrollable body -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/screen_padding"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 SECTION 1 — OVERALL MONTHLY BUDGET
+                 Tapping this card opens a dialog to set/edit the overall limit
+                 that is displayed on the Dashboard.
+                 ═══════════════════════════════════════════════════════════════ -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overall Monthly Budget"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/spacing_xs" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_overall_budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/primary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Budget This Month"
+                            android:textSize="@dimen/text_xs"
+                            android:textColor="#CCFFFFFF" />
+
+                        <TextView
+                            android:id="@+id/tv_overall_budget_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to set →"
+                            android:textSize="@dimen/text_display"
+                            android:textColor="@color/text_on_primary"
+                            android:fontFamily="sans-serif-medium"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to edit · shown on Dashboard"
+                            android:textSize="@dimen/text_xs"
+                            android:textColor="#99FFFFFF" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_edit"
+                        android:alpha="0.8"
+                        android:contentDescription="Edit overall budget"
+                        app:tint="@color/text_on_primary" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ═══════════════════════════════════════════════════════════════
+                 SECTION 2 — CATEGORY BUDGETS
+                 ═══════════════════════════════════════════════════════════════ -->
+            <!-- Header row: title + add button -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xs">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_my_budget"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set a limit per category"
+                    android:textSize="@dimen/text_xs"
+                    android:textColor="@color/text_hint"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_bar_title"
+                    app:layout_constraintEnd_toStartOf="@id/btn_create_budget" />
+
+                <ImageView
+                    android:id="@+id/btn_create_budget"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_plus_circle"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="Add category budget"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Category budget list -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_budget_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <!-- Category sum footer -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:layout_marginBottom="@dimen/spacing_base"
+                app:cardCornerRadius="@dimen/card_radius_sm"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:paddingStart="@dimen/spacing_base"
+                    android:paddingEnd="@dimen/spacing_base">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_total_budget"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_total_budget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="R0.00"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

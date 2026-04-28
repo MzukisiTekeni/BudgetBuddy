@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    COMPONENT: component_card_quick_actions.xml
+    REUSABLE: Include with:
+      <include layout="@layout/component_card_quick_actions" />
+
+    CLICK IDs (set OnClickListeners in code):
+      - action_add_categories     → Add Expense Categories
+      - action_set_budget         → Set Monthly Budget
+      - action_add_expense        → Add Expense
+      - action_savings_goals      → Create Savings Goals
+      - action_view_expenses      → View All Expenses
+      - action_budget_health      → Show Budget Health
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Section header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_md"
+        android:text="@string/quick_actions"
+        android:textSize="@dimen/text_lg"
+        android:textColor="@color/text_primary"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold" />
+
+    <!-- Row 1 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginBottom="@dimen/spacing_sm">
+
+        <!-- Add Expense Categories -->
+        <LinearLayout
+            android:id="@+id/action_add_categories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            android:background="@drawable/bg_quick_action"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/spacing_md"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="＋"
+                android:textSize="22sp"
+                android:textColor="@color/primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/add_expense_categories"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_secondary"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- Set Monthly Budget -->
+        <LinearLayout
+            android:id="@+id/action_set_budget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            android:background="@drawable/bg_quick_action"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/spacing_md"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📋"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/set_monthly_budget"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_secondary"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- Add Expense -->
+        <LinearLayout
+            android:id="@+id/action_add_expense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:background="@drawable/bg_quick_action"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/spacing_md"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="＋"
+                android:textSize="22sp"
+                android:textColor="@color/primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/add_expense"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_secondary"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Row 2 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <!-- Create Savings Goals -->
+        <LinearLayout
+            android:id="@+id/action_savings_goals"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            android:background="@drawable/bg_quick_action"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/spacing_md"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎯"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/create_savings_goals"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_secondary"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- View All Expenses -->
+        <LinearLayout
+            android:id="@+id/action_view_expenses"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            android:background="@drawable/bg_quick_action"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/spacing_md"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📊"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/view_all_expenses"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_secondary"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- Show Budget Health -->
+        <LinearLayout
+            android:id="@+id/action_budget_health"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:background="@drawable/bg_quick_action"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/spacing_md"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="❤️"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/show_budget_health"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_secondary"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

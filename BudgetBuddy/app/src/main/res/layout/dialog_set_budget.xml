@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Reusable dialog layout for entering a Rand amount.
+    Used by:
+      • MonthlyBudgetActivity → set overall budget
+      • MonthlyBudgetActivity → edit a category budget
+      • LogBudgetActivity     → create a new category budget
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount (R)"
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/et_dialog_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="0.00"
+        android:textSize="24sp"
+        android:textColor="@color/text_primary"
+        android:background="@drawable/bg_input_field"
+        android:padding="12dp" />
+
+</LinearLayout>

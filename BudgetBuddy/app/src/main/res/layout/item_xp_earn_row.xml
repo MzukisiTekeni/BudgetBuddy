@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    item_xp_earn_row.xml
+    Single "How to earn XP" row used in ProfileActivity.
+    Set tv_earn_label and tv_earn_xp from code.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+
+    <FrameLayout
+        android:id="@+id/fl_earn_icon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/bg_quick_action"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:id="@+id/tv_earn_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="+"
+            android:textSize="14sp"
+            android:textColor="@color/primary" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_earn_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:text="Log an expense"
+        android:textSize="@dimen/text_sm"
+        android:textColor="@color/text_primary"
+        app:layout_constraintStart_toEndOf="@id/fl_earn_icon"
+        app:layout_constraintEnd_toStartOf="@id/tv_earn_xp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_earn_xp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+10 XP"
+        android:textSize="@dimen/text_sm"
+        android:textColor="@color/xp_yellow"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

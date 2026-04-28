@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    item_category_row.xml
+    RecyclerView item for ExpenseCategoriesActivity.
+    Bind via CategoryAdapter using CategoryItem(emoji, name, isSelected).
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    app:cardCornerRadius="@dimen/card_radius_sm"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/surface">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingStart="@dimen/spacing_base"
+        android:paddingEnd="@dimen/spacing_base">
+
+        <!-- Emoji icon -->
+        <TextView
+            android:id="@+id/tv_category_emoji"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Category name -->
+        <TextView
+            android:id="@+id/tv_category_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/text_primary"
+            app:layout_constraintStart_toEndOf="@id/tv_category_emoji"
+            app:layout_constraintEnd_toStartOf="@id/iv_check"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Check icon (toggled) -->
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_circle_outline"
+            android:contentDescription="Selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

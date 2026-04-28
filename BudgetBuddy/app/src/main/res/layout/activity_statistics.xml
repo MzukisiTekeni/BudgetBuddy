@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/surface"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingBottom="@dimen/spacing_base">
+
+        <include layout="@layout/component_simple_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Period chips -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_sm">
+
+            <TextView
+                android:id="@+id/chip_week"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_selected"
+                android:text="@string/filter_week"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_on_primary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView
+                android:id="@+id/chip_month"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/filter_month"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView
+                android:id="@+id/chip_3months"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/filter_3months"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView
+                android:id="@+id/chip_year"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/filter_year"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/screen_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Key stats 2×2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/spacing_base">
+                    <TextView
+                        android:id="@+id/tv_total_spending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="R0"
+                        android:textSize="@dimen/text_xxl"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_total_spending"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_daily_average"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="R0"
+                        android:textSize="@dimen/text_xxl"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_daily_average"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/spacing_base">
+                    <TextView
+                        android:id="@+id/tv_top_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="–"
+                        android:textSize="@dimen/text_xxl"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_top_category"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_vs_last_period"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="–"
+                        android:textSize="@dimen/text_xxl"
+                        android:textColor="@color/streak_orange"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_vs_last_period"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Bar chart card — uses SpendingBarChartView (no third-party lib) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_base"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_xs"
+                        android:text="Spending vs Budget"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+
+                    <!--
+                        SpendingBarChartView drawn in StatisticsActivity.kt using Canvas.
+                        No dependency needed — just call bar_chart.setData(listOf(...)).
+                    -->
+                    <com.budgetbuddy.app.SpendingBarChartView
+                        android:id="@+id/bar_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Insights -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_sm"
+                android:text="@string/section_insights"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_insights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

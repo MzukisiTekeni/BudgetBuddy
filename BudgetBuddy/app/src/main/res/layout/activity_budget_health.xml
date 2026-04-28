@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingBottom="@dimen/spacing_sm">
+        <include layout="@layout/component_simple_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/screen_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Score card with custom donut ring -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_base"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_base">
+
+                    <!--
+                        DonutScoreView — a pure Canvas circle ring drawn in BudgetHealthActivity.kt.
+                        No third-party library needed.
+                        Call donutScoreView.setScore(75) from the activity.
+                    -->
+                    <com.budgetbuddy.app.DonutScoreView
+                        android:id="@+id/donut_health_score"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal" />
+
+                    <!-- Dynamic label: "Great 🟢" / "Fair 🟡" / "At Risk 🔴" -->
+                    <TextView
+                        android:id="@+id/tv_health_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:text="Good"
+                        android:textSize="@dimen/text_xl"
+                        android:textColor="@color/primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Health score • this month"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/text_hint" />
+
+                    <!-- Stats row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/spacing_base"
+                        android:weightSum="3">
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:id="@+id/tv_days_tracked"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="0" android:textSize="@dimen/text_xl"
+                                android:textColor="@color/text_primary" android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="@string/label_days_tracked" android:textSize="@dimen/text_xs" android:textColor="@color/text_hint" />
+                        </LinearLayout>
+
+                        <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/divider_line" />
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:id="@+id/tv_on_track"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="0" android:textSize="@dimen/text_xl"
+                                android:textColor="@color/text_primary" android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="@string/label_on_track" android:textSize="@dimen/text_xs" android:textColor="@color/text_hint" />
+                        </LinearLayout>
+
+                        <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/divider_line" />
+
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                            <TextView android:id="@+id/tv_overspent"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="0" android:textSize="@dimen/text_xl"
+                                android:textColor="@color/goal_red" android:fontFamily="sans-serif-medium" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="@string/label_overspent" android:textSize="@dimen/text_xs" android:textColor="@color/text_hint" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Category breakdown card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_base"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_sm"
+                        android:text="@string/section_category_breakdown"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_category_breakdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Overspending summary card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xl"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_sm"
+                        android:text="@string/section_overspending"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="@color/goal_red"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_overspend_summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/text_secondary"
+                        android:lineSpacingMultiplier="1.4" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

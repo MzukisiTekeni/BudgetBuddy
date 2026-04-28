@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    COMPONENT: component_simple_top_bar.xml
+    Reusable back-arrow + centred title header for secondary screens.
+
+    IDs:
+      iv_back       → back arrow ImageView (set OnClickListener)
+      tv_bar_title  → page title TextView
+      iv_bar_action → optional right-side action icon (set visibility + src)
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/top_bar_height">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/icon_lg"
+        android:layout_height="@dimen/icon_lg"
+        android:src="@drawable/ic_back_arrow"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_bar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registration"
+        android:textSize="@dimen/text_lg"
+        android:textColor="@color/text_primary"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_bar_action"
+        android:layout_width="@dimen/icon_lg"
+        android:layout_height="@dimen/icon_lg"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="Action"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

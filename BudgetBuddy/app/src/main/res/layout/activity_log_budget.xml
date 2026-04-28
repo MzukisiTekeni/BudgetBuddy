@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/surface"
+    android:padding="@dimen/screen_padding">
+
+    <include layout="@layout/component_simple_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Amount card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xl"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardBackgroundColor="@color/surface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/spacing_lg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_amount"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary" />
+
+            <EditText
+                android:id="@+id/et_budget_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/default_amount"
+                android:textSize="36sp"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@android:color/transparent"
+                android:inputType="numberDecimal" />
+
+            <View
+                android:layout_width="120dp"
+                android:layout_height="2dp"
+                android:background="@color/primary" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Category spinner -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_height"
+        android:layout_marginTop="@dimen/spacing_base"
+        android:background="@drawable/bg_input_field"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/tv_budget_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_choose_cat_budget"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/text_hint"
+            android:paddingStart="@dimen/spacing_base"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_cat_dropdown"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_cat_dropdown"
+            android:layout_width="@dimen/icon_md"
+            android:layout_height="@dimen/icon_md"
+            android:src="@drawable/ic_chevron_down"
+            android:layout_marginEnd="@dimen/spacing_base"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Cancel / Save row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/spacing_base"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/Style.OutlineButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:text="@string/btn_cancel" />
+
+        <Button
+            android:id="@+id/btn_save_budget"
+            style="@style/Style.PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:text="@string/btn_save_budget" />
+    </LinearLayout>
+
+    <!-- No categories hint -->
+    <TextView
+        android:id="@+id/tv_no_categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_xl"
+        android:text="@string/no_categories_yet"
+        android:textSize="@dimen/text_sm"
+        android:textColor="@color/text_hint" />
+
+    <Button
+        android:id="@+id/btn_add_category"
+        style="@style/Style.OutlineButton"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:text="@string/btn_add_category" />
+
+</LinearLayout>

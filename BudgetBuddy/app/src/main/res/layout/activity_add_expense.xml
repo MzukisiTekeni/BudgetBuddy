@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="24dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding">
+
+            <include layout="@layout/component_simple_top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- Amount card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_base"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_amount"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/text_secondary" />
+
+                    <!--
+                        hint="0.00" renders in text_hint colour automatically.
+                        When the user taps, the hint disappears and the keyboard opens.
+                        No programmatic setText() needed — avoids the typing bug.
+                    -->
+                    <EditText
+                        android:id="@+id/et_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:hint="0.00"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="36sp"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@android:color/transparent"
+                        android:inputType="numberDecimal" />
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="2dp"
+                        android:background="@color/primary" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Description -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_base"
+                android:text="@string/label_description"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium" />
+
+            <EditText
+                android:id="@+id/et_description"
+                style="@style/Style.InputField"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:hint="@string/hint_description"
+                android:inputType="text"
+                android:imeOptions="actionNext" />
+
+            <!-- Category spinner -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginTop="@dimen/spacing_base"
+                android:background="@drawable/bg_input_field"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tv_selected_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_choose_category"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/text_hint"
+                    android:paddingStart="@dimen/spacing_base"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_dropdown"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_dropdown"
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@drawable/ic_chevron_down"
+                    android:layout_marginEnd="@dimen/spacing_base"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Date -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_base"
+                android:text="@string/label_date"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:background="@drawable/bg_input_field"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_date"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/text_hint"
+                    android:paddingStart="@dimen/spacing_base"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_calendar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_calendar"
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@drawable/ic_calendar"
+                    android:layout_marginEnd="@dimen/spacing_base"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Receipt photo label row -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_base">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_receipt_photo"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="sans-serif-medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_optional"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_hint"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Receipt upload area (shown when no image chosen) -->
+            <LinearLayout
+                android:id="@+id/ll_receipt_upload"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:background="@drawable/bg_receipt_upload"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_image"
+                    android:contentDescription="Upload receipt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="@string/tap_to_attach"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/receipt_formats"
+                    android:textSize="@dimen/text_xs"
+                    android:textColor="@color/text_hint" />
+            </LinearLayout>
+
+            <!--
+                Receipt preview (hidden until image is selected).
+                Tapping it lets the user replace the image.
+            -->
+            <ImageView
+                android:id="@+id/iv_receipt_preview"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_receipt_upload"
+                android:contentDescription="Receipt preview"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone" />
+
+            <!-- XP tip -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_base">
+
+                <ImageView
+                    android:id="@+id/iv_xp_star"
+                    android:layout_width="@dimen/icon_sm"
+                    android:layout_height="@dimen/icon_sm"
+                    android:src="@drawable/ic_star"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xs"
+                    android:text="@string/xp_logging_tip"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_secondary"
+                    app:layout_constraintStart_toEndOf="@id/iv_xp_star"
+                    app:layout_constraintEnd_toStartOf="@id/tv_xp_value"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_xp_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/xp_value"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/xp_yellow"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Save Expense button -->
+            <Button
+                android:id="@+id/btn_save_expense"
+                style="@style/Style.PrimaryButton"
+                android:layout_marginTop="@dimen/spacing_base"
+                android:text="@string/btn_save_expense" />
+
+            <!-- No categories hint -->
+            <TextView
+                android:id="@+id/tv_no_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_base"
+                android:text="@string/no_categories_yet"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_hint"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_add_category"
+                style="@style/Style.OutlineButton"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/btn_add_category"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

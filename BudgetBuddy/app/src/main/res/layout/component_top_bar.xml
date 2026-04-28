@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    COMPONENT: component_top_bar.xml
+    REUSABLE: Include in any activity/fragment layout using:
+      <include layout="@layout/component_top_bar" />
+
+    CUSTOMISE via data binding or findViewById:
+      - tv_page_title   → set page title text
+      - iv_notification → set notification badge visibility
+      - tv_avatar_initials → set user initials (e.g. "MT")
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/top_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/top_bar_height"
+    android:background="@color/background"
+    android:paddingStart="@dimen/screen_padding"
+    android:paddingEnd="@dimen/screen_padding">
+
+    <!-- Notification Bell -->
+    <ImageView
+        android:id="@+id/iv_notification"
+        android:layout_width="@dimen/icon_lg"
+        android:layout_height="@dimen/icon_lg"
+        android:src="@android:drawable/ic_dialog_info"
+        android:contentDescription="@string/cd_notification"
+        android:tint="@color/text_primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Page Title -->
+    <TextView
+        android:id="@+id/tv_page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dashboard_title"
+        android:textSize="@dimen/text_lg"
+        android:textColor="@color/text_primary"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- User Avatar -->
+    <FrameLayout
+        android:id="@+id/fl_avatar"
+        android:layout_width="@dimen/avatar_size"
+        android:layout_height="@dimen/avatar_size"
+        android:background="@drawable/bg_avatar"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_avatar_initials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="MT"
+            android:textColor="@color/text_on_primary"
+            android:textSize="@dimen/text_sm"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

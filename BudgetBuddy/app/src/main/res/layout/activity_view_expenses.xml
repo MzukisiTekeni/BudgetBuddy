@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/surface"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingBottom="@dimen/spacing_base">
+
+        <include layout="@layout/component_simple_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Period label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="Select a period"
+            android:textSize="@dimen/text_xs"
+            android:textColor="@color/text_hint" />
+
+        <!-- Period filter chips -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_xs">
+
+            <TextView
+                android:id="@+id/chip_daily"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/filter_daily"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView
+                android:id="@+id/chip_weekly"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/filter_weekly"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView
+                android:id="@+id/chip_monthly"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_chip_selected"
+                android:text="@string/filter_monthly"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_on_primary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+
+            <TextView
+                android:id="@+id/chip_yearly"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_chip_unselected"
+                android:text="@string/filter_yearly"
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:paddingStart="@dimen/spacing_base"
+                android:paddingEnd="@dimen/spacing_base"
+                android:clickable="true" android:focusable="true" />
+        </LinearLayout>
+
+        <!-- Month dropdown -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_month_picker"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:background="@drawable/bg_input_field"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/tv_selected_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="March 2026"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:paddingStart="@dimen/spacing_base"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_month_dropdown"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_month_dropdown"
+                android:layout_width="@dimen/icon_md"
+                android:layout_height="@dimen/icon_md"
+                android:src="@drawable/ic_chevron_down"
+                android:layout_marginEnd="@dimen/spacing_base"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <!-- Expense list (expandable categories) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_expenses"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingTop="@dimen/spacing_sm"
+        android:paddingBottom="@dimen/spacing_sm"
+        android:clipToPadding="false" />
+
+    <!-- Total Spent footer -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/screen_padding"
+        android:layout_marginEnd="@dimen/screen_padding"
+        android:layout_marginBottom="@dimen/spacing_base"
+        app:cardCornerRadius="@dimen/card_radius_sm"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardBackgroundColor="@color/surface">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:paddingStart="@dimen/spacing_base"
+            android:paddingEnd="@dimen/spacing_base">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_total_spent"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_total_spent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R6,525.00"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/text_primary"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

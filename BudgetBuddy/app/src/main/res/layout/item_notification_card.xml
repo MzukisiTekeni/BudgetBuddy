@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    item_notification_card.xml
+    Bind in NotificationAdapter with NotificationItem(icon, title, body, time, tag, isUnread)
+-->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/surface">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_base">
+
+        <!-- Unread dot -->
+        <View
+            android:id="@+id/v_unread_dot"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/bg_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_notif_time" />
+
+        <!-- Icon -->
+        <FrameLayout
+            android:id="@+id/fl_notif_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_quick_action"
+            android:layout_marginStart="@dimen/spacing_base"
+            app:layout_constraintStart_toEndOf="@id/v_unread_dot"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/tv_notif_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="⚠️"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tv_notif_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:text="Food Budget at 70%"
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/fl_notif_icon"
+            app:layout_constraintEnd_toStartOf="@id/iv_close"
+            app:layout_constraintTop_toTopOf="@id/fl_notif_icon" />
+
+        <!-- Body -->
+        <TextView
+            android:id="@+id/tv_notif_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginTop="2dp"
+            android:text="R1,400 of R2,000 used – R600 left for 11 day."
+            android:textSize="@dimen/text_xs"
+            android:textColor="@color/text_secondary"
+            android:lineSpacingMultiplier="1.3"
+            app:layout_constraintStart_toEndOf="@id/fl_notif_icon"
+            app:layout_constraintEnd_toStartOf="@id/iv_close"
+            app:layout_constraintTop_toBottomOf="@id/tv_notif_title" />
+
+        <!-- Close button -->
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/icon_sm"
+            android:layout_height="@dimen/icon_sm"
+            android:src="@drawable/ic_close"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Dismiss"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Time + Tag row -->
+        <LinearLayout
+            android:id="@+id/tv_notif_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:layout_marginStart="@dimen/spacing_sm"
+            app:layout_constraintStart_toEndOf="@id/fl_notif_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_notif_body">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8:02 AM"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/text_hint" />
+
+            <TextView
+                android:id="@+id/tv_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:background="@drawable/bg_tag_alert"
+                android:text="Alert"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/tag_alert_text"
+                android:paddingStart="@dimen/spacing_sm"
+                android:paddingEnd="@dimen/spacing_sm"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
