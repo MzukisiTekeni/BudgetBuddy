@@ -1,5 +1,9 @@
 # BudgetBuddy
 
+App's APK Files link: https://github.com/MzukisiTekeni/BudgetBuddy/releases
+
+YouTube video Link: 
+
 What is BudgetBuddy?
 BudgetBuddy is a friendly finance tracking app that helps you take control of your money without the stress. Whether you want to save for something special, pay off debt, or just understand where your money goes each month, BudgetBuddy makes budgeting simple, visual, and even enjoyable.
 
