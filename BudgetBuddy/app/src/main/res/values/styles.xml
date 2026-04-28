@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ══════════════════════════════════════════════
+         APP THEME
+         ══════════════════════════════════════════════ -->
+    <style name="Theme.BudgetBuddy" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent_green</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/nav_background</item>
+    </style>
+
+    <style name="Theme.BudgetBuddy.Auth" parent="Theme.BudgetBuddy">
+        <item name="android:windowBackground">@color/surface</item>
+    </style>
+
+    <!-- ══════════════════════════════════════════════
+         BUTTON STYLES
+         ══════════════════════════════════════════════ -->
+
+    <style name="Style.PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/bg_btn_primary</item>
+        <item name="android:textColor">@color/text_on_primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <style name="Style.OutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:background">@drawable/bg_btn_outline</item>
+        <item name="android:textColor">@color/btn_outline_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="backgroundTint">@null</item>
+        <item name="strokeColor">@null</item>
+    </style>
+
+    <style name="Style.BudgetBuddy.PillButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/bg_pill_button</item>
+        <item name="android:textColor">@color/text_on_primary</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <!-- ══════════════════════════════════════════════
+         INPUT FIELD
+         ══════════════════════════════════════════════ -->
+    <style name="Style.InputField" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_input_field</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <!-- ══════════════════════════════════════════════
+         CARD STYLES
+         ══════════════════════════════════════════════ -->
+    <style name="Style.Card" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+    </style>
+
+    <style name="Style.Card.Small" parent="Style.Card">
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+
+    <!-- ══════════════════════════════════════════════
+         TEXT APPEARANCE STYLES
+         itemTextAppearanceActive / Inactive REQUIRE a
+         TextAppearance parent — this was the root cause
+         of the AAPT "style/TextStyle not found" error.
+         ══════════════════════════════════════════════ -->
+
+    <!-- Parent style that AAPT needs to resolve TextStyle.* -->
+    <style name="TextStyle" parent="TextAppearance.AppCompat" />
+
+    <style name="TextStyle.PageTitle" parent="TextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.Hero" parent="TextStyle">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.SectionHeader" parent="TextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.Label" parent="TextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <!-- These two are used by BottomNavigationView's
+         app:itemTextAppearanceActive / Inactive.
+         They MUST extend TextAppearance.AppCompat
+         (or any TextAppearance.*) or AAPT throws
+         "resource style/TextStyle not found". -->
+    <style name="TextStyle.NavActive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/nav_selected</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.NavInactive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/nav_unselected</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+</resources>

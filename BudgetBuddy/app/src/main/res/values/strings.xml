@@ -1,0 +1,210 @@
+<resources>
+    <string name="app_name">BudgetBuddy</string>
+
+    <!-- ── Welcome ──────────────────────────────────────────── -->
+    <string name="welcome_to">Welcome to</string>
+    <string name="app_tagline">Take control of your finances</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="btn_log_in">Log In</string>
+    <string name="privacy_prefix">By signing up, you agree with</string>
+    <string name="privacy_link">Our Privacy Policy &amp; Terms</string>
+
+    <!-- ── Registration ─────────────────────────────────────── -->
+    <string name="title_registration">Registration</string>
+    <string name="create_free_account">Create a free account</string>
+    <string name="hint_username">Enter your Username</string>
+    <string name="hint_email">Enter your Email</string>
+    <string name="hint_password">Enter your Password</string>
+    <string name="hint_confirm_password">Enter your Password again</string>
+    <string name="label_username">Username</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_confirm_password">Confirm password</string>
+    <string name="btn_register">Register</string>
+    <string name="already_have_account">Already have an account?</string>
+
+    <!-- ── Login ────────────────────────────────────────────── -->
+    <string name="hint_login_username">Enter your Username</string>
+    <string name="hint_login_password">Enter your Password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="btn_register_link">Register</string>
+
+    <!-- ── Forgot Password ──────────────────────────────────── -->
+    <string name="title_forgot_password">Forgot your password?</string>
+    <string name="reset_password_heading">Reset your password now</string>
+    <string name="hint_reset_email">Enter your email</string>
+    <string name="btn_send_password">Send me a new password</string>
+
+    <!-- ── Dashboard ────────────────────────────────────────── -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="budget_this_month">Budget this Month</string>
+    <string name="view">View →</string>
+    <string name="budget_amount">R10,900.00</string>
+    <string name="remaining_label">R4,400 remaining</string>
+    <string name="percent_used">60% used</string>
+    <string name="xp_progress">XP progress</string>
+    <string name="xp_count">1,340 of 2000 XP</string>
+    <string name="xp_unlock_hint">660 XP to unlock Midnight theme</string>
+    <string name="days_label">Days</string>
+    <string name="logging_streak">logging streak</string>
+    <string name="goals_label">4/6</string>
+    <string name="goals_sub">goals on track</string>
+    <string name="achievements">Achievements</string>
+    <string name="view_profile">View profile →</string>
+    <string name="badge_first_budget">First budget</string>
+    <string name="badge_streak">7-day streak</string>
+    <string name="badge_saver">Saver</string>
+    <string name="badge_all_goals">All goals met</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="add_expense_categories">Add Expense\nCategories</string>
+    <string name="set_monthly_budget">Set Monthly\nBudget</string>
+    <string name="add_expense">Add\nExpense</string>
+    <string name="create_savings_goals">Create Savings\nGoals</string>
+    <string name="view_all_expenses">View All\nExpenses</string>
+    <string name="show_budget_health">Show Budget\nHealth</string>
+    <string name="cd_notification">Notifications</string>
+
+    <!-- ── Expense Categories ───────────────────────────────── -->
+    <string name="title_expense_categories">Expense Categories</string>
+    <string name="subtitle_expense_categories">Add one or more expense categories</string>
+    <string name="category_bills">Bills &amp; Utilities</string>
+    <string name="category_groceries">Groceries</string>
+    <string name="category_transport">Transport</string>
+    <string name="category_health">Health &amp; Medical</string>
+    <string name="category_food">Food &amp; Drinks</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="category_shopping">Shopping</string>
+    <string name="category_debt">Debt</string>
+    <string name="category_insurance">Insurance</string>
+    <string name="category_other">Other</string>
+    <string name="hint_category_name">Type category name</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_continue">Continue</string>
+
+    <!-- ── Add Expense ──────────────────────────────────────── -->
+    <string name="title_add_expense">Add Expense</string>
+    <string name="label_amount">Amount</string>
+    <string name="default_amount">R 0.00</string>
+    <string name="label_description">Description</string>
+    <string name="hint_description">e.g Shoprite grocery run</string>
+    <string name="hint_choose_category">Choose expense category</string>
+    <string name="label_date">Date</string>
+    <string name="hint_date">DD/MM/YYYY</string>
+    <string name="label_receipt_photo">Receipt photo</string>
+    <string name="label_optional">optional</string>
+    <string name="tap_to_attach">Tap to attach receipt</string>
+    <string name="receipt_formats">JPG, PNG, or PDF</string>
+    <string name="xp_logging_tip">Logging earns you</string>
+    <string name="xp_value">+10 XP</string>
+    <string name="btn_save_expense">Save Expense</string>
+    <string name="no_categories_yet">No expense categories yet?</string>
+    <string name="btn_add_category">Add Category</string>
+
+    <!-- ── View All Expenses ────────────────────────────────── -->
+    <string name="title_view_expenses">View All Expenses</string>
+    <string name="filter_daily">Daily</string>
+    <string name="filter_weekly">Weekly</string>
+    <string name="filter_monthly">Monthly</string>
+    <string name="filter_yearly">Yearly</string>
+    <string name="label_total_spent">Total Spent</string>
+
+    <!-- ── Monthly Budget ───────────────────────────────────── -->
+    <string name="title_monthly_budget">Monthly Budget</string>
+    <string name="create_budget_title">Create a budget</string>
+    <string name="create_budget_subtitle">Save more by setting a budget</string>
+    <string name="label_total_budget">Total Budget</string>
+    <string name="section_my_budget">My Budget</string>
+
+    <!-- ── Log Budget ───────────────────────────────────────── -->
+    <string name="title_log_budget">Log Budget Details</string>
+    <string name="hint_choose_cat_budget">Choose category</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save_budget">Save Budget</string>
+
+    <!-- ── Savings Goals ────────────────────────────────────── -->
+    <string name="title_savings_goals">Savings Goals</string>
+    <string name="label_total_saved">Total Saved across all goals</string>
+    <string name="label_active">Active</string>
+    <string name="label_completed">Completed</string>
+    <string name="label_on_completion">On completion</string>
+    <string name="section_active_goals">Active goals</string>
+    <string name="section_completed_goals">Completed goals</string>
+
+    <!-- ── Log Savings Goal ─────────────────────────────────── -->
+    <string name="title_log_savings_goal">Log a Savings Goal</string>
+    <string name="label_goal_name">Goal name</string>
+    <string name="hint_goal_name">e.g Holiday to Cape Town</string>
+    <string name="label_target_date">Target Date</string>
+    <string name="label_save_how_often">Save how often?</string>
+    <string name="chip_weekly">Weekly</string>
+    <string name="chip_monthly">Monthly</string>
+    <string name="chip_custom">Custom</string>
+    <string name="xp_goal_tip">Completing this goal earns</string>
+    <string name="xp_goal_value">+200 XP</string>
+    <string name="btn_create_goal">Create goal</string>
+
+    <!-- ── Statistics ───────────────────────────────────────── -->
+    <string name="title_statistics">Statistics</string>
+    <string name="filter_week">Week</string>
+    <string name="filter_month">Month</string>
+    <string name="filter_3months">3 Months</string>
+    <string name="filter_year">Year</string>
+    <string name="label_total_spending">Total spending</string>
+    <string name="label_daily_average">Daily average</string>
+    <string name="label_top_category">Top Category</string>
+    <string name="label_vs_last_period">vs last period</string>
+    <string name="section_insights">Insights &amp; trends</string>
+
+    <!-- ── Budget Health ────────────────────────────────────── -->
+    <string name="title_budget_health">Budget Health</string>
+    <string name="label_good">Good</string>
+    <string name="label_days_tracked">Days tracked</string>
+    <string name="label_on_track">On track</string>
+    <string name="label_overspent">Overspent</string>
+    <string name="section_category_breakdown">Category breakdown</string>
+    <string name="section_overspending">Overspending Summary</string>
+
+    <!-- ── Profile ──────────────────────────────────────────── -->
+    <string name="title_profile">Profile</string>
+    <string name="member_since">Member since March 2025</string>
+    <string name="label_day_streak">Day Streak</string>
+    <string name="label_total_xp">Total XP</string>
+    <string name="label_saved">Saved</string>
+    <string name="tab_xp">XP</string>
+    <string name="tab_badges">Badges</string>
+    <string name="tab_themes">Themes</string>
+    <string name="label_level">Level 6</string>
+    <string name="xp_progress_label">1,340 / 2000 XP</string>
+    <string name="xp_next_level">660 XP to Level 7</string>
+    <string name="section_how_to_earn">How to earn XP</string>
+    <string name="earn_log_expense">Log an expense</string>
+    <string name="earn_stay_budget">Stay within budget</string>
+    <string name="earn_complete_goal">Complete a savings goal</string>
+    <string name="earn_xp_10">+10 XP</string>
+    <string name="earn_xp_50">+50 XP</string>
+    <string name="earn_xp_200">+200 XP</string>
+    <string name="section_settings">Settings</string>
+    <string name="setting_notifications">Notifications</string>
+    <string name="setting_currency">Currency</string>
+    <string name="setting_currency_value">ZAR • R</string>
+    <string name="setting_privacy">Privacy</string>
+    <string name="setting_sign_out">Sign out</string>
+
+    <!-- ── Notifications ────────────────────────────────────── -->
+    <string name="title_notifications">Notifications</string>
+    <string name="btn_clear_all">Clear all</string>
+    <string name="tab_all">All</string>
+    <string name="tab_alerts">Alerts</string>
+    <string name="tab_nudges">Nudges</string>
+    <string name="tab_insights">Insights</string>
+    <string name="label_today">Today</string>
+    <string name="label_yesterday">Yesterday</string>
+
+    <!-- ── Bottom Nav ────────────────────────────────────────── -->
+    <string name="nav_home">Home</string>
+    <string name="nav_expenses">Expenses</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_savings">Savings</string>
+    <string name="nav_profile">Profile</string>
+</resources>
