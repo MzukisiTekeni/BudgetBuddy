@@ -179,7 +179,7 @@ class ProfileActivity : AppCompatActivity() {
                 earnedCount++
                 // Full colour — restore alpha and no colour filter
                 circle.alpha = 1f
-                circle.colorFilter = null
+                circle.background?.colorFilter = null
                 label.setTextColor(getColor(R.color.primary))
                 label.alpha = 1f
             } else {
