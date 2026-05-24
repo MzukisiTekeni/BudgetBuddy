@@ -2,12 +2,12 @@ package com.budgetbuddy.app
 
 import android.os.Bundle
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import com.budgetbuddy.app.db.BudgetRepository
 import kotlinx.coroutines.launch
 
-class ForgotPasswordActivity : AppCompatActivity() {
+class ForgotPasswordActivity : BaseThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)

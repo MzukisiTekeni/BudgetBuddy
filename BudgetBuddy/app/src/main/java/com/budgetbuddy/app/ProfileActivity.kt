@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.budgetbuddy.app.db.BadgeKeys
 import com.budgetbuddy.app.db.BudgetRepository
 import com.budgetbuddy.app.db.SessionManager
 import kotlinx.coroutines.launch
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private var userId = -1
@@ -24,7 +23,6 @@ class ProfileActivity : AppCompatActivity() {
     private val THEME_XP_VIOLET    = 5000
 
     // ── Badge view IDs ────────────────────────────────────────────────────────
-    // Maps each BadgeKey → Pair(circleFrameLayoutId, labelTextViewId)
     private val badgeViewMap = mapOf(
         BadgeKeys.FIRST_BUDGET     to Pair(R.id.badge_circle_first_budget,     R.id.badge_lbl_first_budget),
         BadgeKeys.STREAK_7         to Pair(R.id.badge_circle_streak_7,         R.id.badge_lbl_streak_7),
@@ -36,6 +34,29 @@ class ProfileActivity : AppCompatActivity() {
         BadgeKeys.GOAL_CRUSHER     to Pair(R.id.badge_circle_goal_crusher,     R.id.badge_lbl_goal_crusher),
         BadgeKeys.CONSISTENT_SAVER to Pair(R.id.badge_circle_consistent_saver, R.id.badge_lbl_consistent_saver)
     )
+
+    // ── Theme definitions ─────────────────────────────────────────────────────
+    private data class ThemeInfo(
+        val name: String,
+        val xpRequired: Int,
+        val containerId: Int,
+        val subLabelId: Int
+    )
+
+    private val themes = listOf(
+        ThemeInfo(ThemeManager.THEME_FOREST,   0,                R.id.theme_forest,   R.id.theme_sub_forest),
+        ThemeInfo(ThemeManager.THEME_OCEAN,    THEME_XP_OCEAN,   R.id.theme_ocean,    R.id.theme_sub_ocean),
+        ThemeInfo(ThemeManager.THEME_MIDNIGHT, THEME_XP_MIDNIGHT,R.id.theme_midnight, R.id.theme_sub_midnight),
+        ThemeInfo(ThemeManager.THEME_VIOLET,   THEME_XP_VIOLET,  R.id.theme_violet,   R.id.theme_sub_violet),
+        ThemeInfo(ThemeManager.THEME_AMBER,    THEME_XP_AMBER,   R.id.theme_amber,    R.id.theme_sub_amber)
+    )
+
+    // ── BaseThemedActivity overrides ──────────────────────────────────────────
+    override fun themedBackgroundViewIds() = listOf(R.id.fl_avatar)
+    override fun themedProgressBarIds()    = listOf(R.id.progress_xp)
+    override fun themedTextViewIds()       = emptyList<Int>()  // tabs re-coloured via selectTab
+
+    // ─────────────────────────────────────────────────────────────────────────
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,18 +104,18 @@ class ProfileActivity : AppCompatActivity() {
                 this.progress = progress
             }
 
-            // XP fraction label  e.g.  "1,340 / 2,000 XP"
+            // XP fraction label
             findViewById<TextView>(R.id.tv_xp_fraction).text =
                 "%,d / %,d XP".format(user.totalXp, maxXp)
 
-            // XP level title  e.g. "Level 6 · Budget Pro"
+            // XP level title
             val levelTitle = "Level ${user.level} · ${levelName(user.level)}"
             findViewById<TextView>(R.id.tv_xp_level_title).text = levelTitle
 
-            // XP hint below the bar  e.g.  "660 XP to Level 7 · Midnight theme"
-            val xpToNext    = (maxXp - user.totalXp).coerceAtLeast(0)
-            val nextUnlock  = nextThemeUnlock(user.totalXp)
-            val hintSuffix  = if (nextUnlock != null) " · ${nextUnlock.first}" else ""
+            // XP hint
+            val xpToNext   = (maxXp - user.totalXp).coerceAtLeast(0)
+            val nextUnlock = nextThemeUnlock(user.totalXp)
+            val hintSuffix = if (nextUnlock != null) " · ${nextUnlock.first}" else ""
             findViewById<TextView>(R.id.tv_xp_hint).text =
                 "$xpToNext XP to Level ${user.level + 1}$hintSuffix"
 
@@ -128,33 +149,35 @@ class ProfileActivity : AppCompatActivity() {
         setSettingsRow(R.id.row_privacy,  "Privacy") {
             Toast.makeText(this, "Privacy settings coming soon", Toast.LENGTH_SHORT).show()
         }
-
         setSettingsRow(R.id.row_clear_data, "Clear Data") { showClearDataDialog() }
-
         setSettingsRow(R.id.row_signout, "Sign out") {
             SessionManager.clearSession(this)
             val intent = Intent(this, WelcomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+
+        // ── Apply current theme colours ───────────────────────────────────────
+        applyCurrentTheme()
     }
 
     // ── Tab logic ─────────────────────────────────────────────────────────────
 
     private fun selectTab(tab: String) {
-        // Update chip styles
+        val palette = ThemeManager.getPalette(this)
+
         listOf(R.id.tab_xp to "XP", R.id.tab_badges to "Badges", R.id.tab_themes to "Themes")
             .forEach { (id, label) ->
-                findViewById<TextView>(id).apply {
-                    setBackgroundResource(
-                        if (label == tab) R.drawable.bg_chip_selected else R.drawable.bg_chip_unselected
-                    )
-                    setTextColor(
-                        if (label == tab) getColor(R.color.text_on_primary)
-                        else              getColor(R.color.text_secondary)
-                    )
+                val tv = findViewById<TextView>(id)
+                if (label == tab) {
+                    ThemeManager.tintBackground(tv, palette.primary)
+                    tv.setTextColor(getColor(R.color.text_on_primary))
+                } else {
+                    tv.setBackgroundResource(R.drawable.bg_chip_unselected)
+                    tv.setTextColor(getColor(R.color.text_secondary))
                 }
             }
+
         // Show/hide panels
         findViewById<View>(R.id.panel_xp).visibility     = if (tab == "XP")     View.VISIBLE else View.GONE
         findViewById<View>(R.id.panel_badges).visibility = if (tab == "Badges") View.VISIBLE else View.GONE
@@ -163,12 +186,9 @@ class ProfileActivity : AppCompatActivity() {
 
     // ── Badges panel ─────────────────────────────────────────────────────────
 
-    /**
-     * For each badge: if earned → show full colour + green label.
-     * If not earned → apply greyscale alpha overlay.
-     */
     private fun updateBadgesPanel(earned: Set<String>) {
         var earnedCount = 0
+        val palette = ThemeManager.getPalette(this)
 
         for ((key, ids) in badgeViewMap) {
             val (circleId, labelId) = ids
@@ -177,20 +197,17 @@ class ProfileActivity : AppCompatActivity() {
 
             if (key in earned) {
                 earnedCount++
-                // Full colour — restore alpha and no colour filter
                 circle.alpha = 1f
                 circle.background?.colorFilter = null
-                label.setTextColor(getColor(R.color.primary))
+                label.setTextColor(palette.primary)
                 label.alpha = 1f
             } else {
-                // Locked — dim with greyscale effect
                 circle.alpha = 0.38f
                 label.setTextColor(getColor(R.color.text_hint))
                 label.alpha = 0.5f
             }
         }
 
-        // Update count label
         val allBadges = badgeViewMap.size
         findViewById<TextView>(R.id.tv_badge_count).text =
             "$earnedCount of $allBadges badges earned"
@@ -198,44 +215,45 @@ class ProfileActivity : AppCompatActivity() {
 
     // ── Themes panel ─────────────────────────────────────────────────────────
 
-    private data class ThemeInfo(
-        val name: String,
-        val xpRequired: Int,
-        val containerId: Int,
-        val subLabelId: Int
-    )
-
-    private val themes = listOf(
-        ThemeInfo("Forest",   0,                R.id.theme_forest,   R.id.theme_sub_forest),
-        ThemeInfo("Ocean",    THEME_XP_OCEAN,   R.id.theme_ocean,    R.id.theme_sub_ocean),
-        ThemeInfo("Midnight", THEME_XP_MIDNIGHT,R.id.theme_midnight, R.id.theme_sub_midnight),
-        ThemeInfo("Violet",   THEME_XP_VIOLET,  R.id.theme_violet,   R.id.theme_sub_violet),
-        ThemeInfo("Amber",    THEME_XP_AMBER,   R.id.theme_amber,    R.id.theme_sub_amber)
-    )
-
     private fun updateThemesPanel(totalXp: Int) {
+        val currentTheme = ThemeManager.getCurrentTheme(this)
+
         for (theme in themes) {
             val container = findViewById<LinearLayout>(theme.containerId)
             val subLabel  = findViewById<TextView>(theme.subLabelId)
+            val unlocked  = totalXp >= theme.xpRequired
 
-            if (totalXp >= theme.xpRequired) {
-                // Unlocked
+            if (unlocked) {
                 container.alpha = 1f
-                if (theme.xpRequired == 0) {
-                    subLabel.text = "Active"
-                    subLabel.setTextColor(getColor(R.color.primary))
+
+                // Show current state label
+                if (theme.name == currentTheme) {
+                    subLabel.text = "✓ Active"
+                    subLabel.setTextColor(ThemeManager.getPalette(this).primary)
                 } else {
-                    subLabel.text = "Unlocked"
-                    subLabel.setTextColor(getColor(R.color.primary))
+                    subLabel.text = "Tap to apply"
+                    subLabel.setTextColor(getColor(R.color.text_secondary))
+                }
+
+                // Make tappable — apply theme on click
+                container.isClickable = true
+                container.isFocusable = true
+                container.setOnClickListener {
+                    applyTheme(theme.name, totalXp)
                 }
             } else {
-                // Locked
                 container.alpha = 0.38f
-                // Keep the existing XP label text — it was set in the layout
+                container.isClickable = false
+                container.isFocusable = false
+                container.setOnClickListener(null)
+                // Keep the XP-needed text set in the layout
             }
+
+            // Highlight the colour swatch for the active theme
+            highlightThemeSwatch(theme, theme.name == currentTheme)
         }
 
-        // Update the nudge hint in the themes panel
+        // Update hint
         val next = nextThemeUnlock(totalXp)
         val hint = if (next != null) {
             val xpNeeded = next.second - totalXp
@@ -244,6 +262,64 @@ class ProfileActivity : AppCompatActivity() {
             "🎉 All themes unlocked! You're a Budget Legend."
         }
         findViewById<TextView>(R.id.tv_theme_xp_hint).text = hint
+    }
+
+    private val themeBarIds = mapOf(
+        ThemeManager.THEME_FOREST   to R.id.theme_bar_forest,
+        ThemeManager.THEME_OCEAN    to R.id.theme_bar_ocean,
+        ThemeManager.THEME_MIDNIGHT to R.id.theme_bar_midnight,
+        ThemeManager.THEME_VIOLET   to R.id.theme_bar_violet,
+        ThemeManager.THEME_AMBER    to R.id.theme_bar_amber
+    )
+
+    /**
+     * Draw a coloured border / ring around the active theme card
+     * to make it visually distinct.
+     */
+    private fun highlightThemeSwatch(theme: ThemeInfo, isActive: Boolean) {
+        val container = findViewById<LinearLayout>(theme.containerId) ?: return
+        val palette   = ThemeManager.getPaletteFor(theme.name)
+
+        if (isActive) {
+            // Light tint on the card background
+            container.backgroundTintList =
+                android.content.res.ColorStateList.valueOf(palette.accentLight)
+
+            // Tint the colour bar to exactly the theme's primary colour
+            themeBarIds[theme.name]?.let { barId ->
+                runCatching {
+                    ThemeManager.tintBackground(findViewById(barId), palette.primary)
+                }
+            }
+        } else {
+            container.backgroundTintList = null
+        }
+    }
+
+    /**
+     * Persist the chosen theme, refresh the UI instantly, and show a toast.
+     */
+    private fun applyTheme(themeName: String, totalXp: Int) {
+        ThemeManager.saveTheme(this, themeName)
+
+        // Re-colour this screen immediately
+        applyCurrentTheme()
+        selectTab("Themes")        // refresh active chip colour
+        updateThemesPanel(totalXp) // refresh "Active / Tap to apply" labels
+
+        // Also re-colour the avatar background and XP bar now that palette changed
+        runCatching {
+            ThemeManager.tintBackground(
+                findViewById(R.id.fl_avatar),
+                ThemeManager.getPalette(this).primary
+            )
+            ThemeManager.tintProgressBar(
+                findViewById(R.id.progress_xp),
+                ThemeManager.getPalette(this).primary
+            )
+        }
+
+        Toast.makeText(this, "🎨 ${themeName} theme applied!", Toast.LENGTH_SHORT).show()
     }
 
     /** Returns the (name, xpRequired) of the next locked theme, or null if all unlocked. */

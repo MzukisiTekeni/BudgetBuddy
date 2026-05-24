@@ -8,13 +8,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import com.budgetbuddy.app.db.BudgetRepository
 import com.budgetbuddy.app.db.SessionManager
 import kotlinx.coroutines.launch
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private var passwordVisible = false

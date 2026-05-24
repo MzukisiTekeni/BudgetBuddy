@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,7 +45,7 @@ class CategoryAdapter(private val items: MutableList<CategoryItem>) :
     fun selectedItems(): List<CategoryItem> = items.filter { it.isSelected }
 }
 
-class ExpenseCategoriesActivity : AppCompatActivity() {
+class ExpenseCategoriesActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private lateinit var adapter: CategoryAdapter
@@ -65,6 +65,7 @@ class ExpenseCategoriesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expense_categories)
+        applyCurrentTheme()
         repo = BudgetRepository(this)
 
         findViewById<TextView>(R.id.tv_bar_title).text = getString(R.string.title_expense_categories)

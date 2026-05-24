@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.budgetbuddy.app.db.BudgetRepository
@@ -60,7 +60,7 @@ class GoalAdapter(
     }
 }
 
-class SavingsGoalsActivity : AppCompatActivity() {
+class SavingsGoalsActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private lateinit var adapter: GoalAdapter
@@ -69,6 +69,7 @@ class SavingsGoalsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_savings_goals)
+        applyCurrentTheme()
         repo   = BudgetRepository(this)
         userId = SessionManager.getUserId(this)
 

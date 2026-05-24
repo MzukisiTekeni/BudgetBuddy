@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.budgetbuddy.app.db.BudgetEntity
@@ -45,7 +45,7 @@ class BudgetRowAdapter(
 }
 
 // ── Activity ──────────────────────────────────────────────────────────────────
-class MonthlyBudgetActivity : AppCompatActivity() {
+class MonthlyBudgetActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private var userId = -1
@@ -54,6 +54,7 @@ class MonthlyBudgetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_monthly_budget)
+        applyCurrentTheme()
         repo   = BudgetRepository(this)
         userId = SessionManager.getUserId(this)
 

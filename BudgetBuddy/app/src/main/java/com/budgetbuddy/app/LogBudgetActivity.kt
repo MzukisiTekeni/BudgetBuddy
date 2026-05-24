@@ -3,7 +3,7 @@ package com.budgetbuddy.app
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import com.budgetbuddy.app.db.BudgetRepository
 import com.budgetbuddy.app.db.ExpenseCategoryEntity
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class LogBudgetActivity : AppCompatActivity() {
+class LogBudgetActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private var selectedCategory: ExpenseCategoryEntity? = null
@@ -22,6 +22,7 @@ class LogBudgetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_budget)
+        applyCurrentTheme()
         repo = BudgetRepository(this)
         val userId = SessionManager.getUserId(this)
 

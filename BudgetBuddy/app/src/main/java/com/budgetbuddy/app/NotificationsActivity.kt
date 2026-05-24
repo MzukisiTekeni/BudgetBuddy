@@ -3,7 +3,7 @@ package com.budgetbuddy.app
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.budgetbuddy.app.db.BudgetRepository
@@ -61,7 +61,7 @@ class NotifAdapter(
     }
 }
 
-class NotificationsActivity : AppCompatActivity() {
+class NotificationsActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private lateinit var adapter: NotifAdapter
@@ -72,6 +72,7 @@ class NotificationsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
+        applyCurrentTheme()
         repo   = BudgetRepository(this)
         userId = SessionManager.getUserId(this)
 

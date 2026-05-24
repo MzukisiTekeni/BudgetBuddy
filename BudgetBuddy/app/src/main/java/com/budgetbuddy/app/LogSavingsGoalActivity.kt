@@ -3,7 +3,7 @@ package com.budgetbuddy.app
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import com.budgetbuddy.app.db.BudgetRepository
 import com.budgetbuddy.app.db.SessionManager
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LogSavingsGoalActivity : AppCompatActivity() {
+class LogSavingsGoalActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private var selectedFrequency = "Monthly"
@@ -20,6 +20,7 @@ class LogSavingsGoalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_savings_goal)
+        applyCurrentTheme()
         repo = BudgetRepository(this)
 
         findViewById<TextView>(R.id.tv_bar_title).text = "Log a Savings Goal"

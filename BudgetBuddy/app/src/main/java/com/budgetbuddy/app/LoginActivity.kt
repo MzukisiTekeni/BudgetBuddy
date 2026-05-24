@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import com.budgetbuddy.app.db.BudgetRepository
 import com.budgetbuddy.app.db.SessionManager
 import kotlinx.coroutines.launch
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private var passwordVisible = false

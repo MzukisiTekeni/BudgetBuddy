@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.*
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.budgetbuddy.app.db.BudgetRepository
@@ -155,7 +155,7 @@ class InsightAdapter(private val items: MutableList<Pair<String, String>>) :
 }
 
 // ── Activity ──────────────────────────────────────────────────────────────────
-class StatisticsActivity : AppCompatActivity() {
+class StatisticsActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private lateinit var insightAdapter: InsightAdapter
@@ -165,6 +165,7 @@ class StatisticsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
+        applyCurrentTheme()
         repo   = BudgetRepository(this)
         userId = SessionManager.getUserId(this)
 

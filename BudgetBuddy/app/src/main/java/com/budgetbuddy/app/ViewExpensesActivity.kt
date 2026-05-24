@@ -3,7 +3,7 @@ package com.budgetbuddy.app
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import androidx.recyclerview.widget.*
 import com.budgetbuddy.app.db.BudgetRepository
 import com.budgetbuddy.app.db.ExpenseEntity
@@ -79,7 +79,7 @@ class ExpenseGroupAdapter(private val groups: MutableList<ExpenseGroup>) :
     }
 }
 
-class ViewExpensesActivity : AppCompatActivity() {
+class ViewExpensesActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private lateinit var groupAdapter: ExpenseGroupAdapter
@@ -88,6 +88,7 @@ class ViewExpensesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_expenses)
+        applyCurrentTheme()
         repo = BudgetRepository(this)
 
         findViewById<TextView>(R.id.tv_bar_title).text = "View All Expenses"

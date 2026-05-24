@@ -2,10 +2,10 @@ package com.budgetbuddy.app
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+// AppCompatActivity replaced by BaseThemedActivity
 import com.budgetbuddy.app.db.SessionManager
 
-class WelcomeActivity : AppCompatActivity() {
+class WelcomeActivity : BaseThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
