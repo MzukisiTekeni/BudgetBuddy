@@ -63,6 +63,9 @@ class NotifAdapter(
 
 class NotificationsActivity : BaseThemedActivity() {
 
+    override fun themedBackgroundViewIds() = listOf(R.id.btn_clear_all)
+
+
     private lateinit var repo: BudgetRepository
     private lateinit var adapter: NotifAdapter
     private var userId     = -1

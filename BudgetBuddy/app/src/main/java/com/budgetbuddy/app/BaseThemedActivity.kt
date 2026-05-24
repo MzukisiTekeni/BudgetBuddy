@@ -2,78 +2,105 @@ package com.budgetbuddy.app
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.widget.FrameLayout
+import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
  * BaseThemedActivity
- * ──────────────────────────────────────────────────────────────
- * Every Activity in BudgetBuddy extends this instead of
- * AppCompatActivity directly.  After setContentView() each
- * subclass calls applyCurrentTheme() to re-colour the standard
- * themed elements on that screen.
+ * ─────────────────────────────────────────────────────────────────
+ * All activities extend this.  On every onResume() the current
+ * theme is re-applied so navigating back from ProfileActivity
+ * picks up a newly chosen theme immediately.
  */
 abstract class BaseThemedActivity : AppCompatActivity() {
 
-    // Subclasses must declare which view IDs carry the primary colour.
-    // Return empty list for IDs that don't exist on a particular screen.
-
-    /** FrameLayout / LinearLayout / View whose background should be primary-tinted */
+    /** Views whose background GradientDrawable should be filled with primary */
     open fun themedBackgroundViewIds(): List<Int> = emptyList()
 
-    /** ProgressBar IDs whose progress track should be primary-tinted */
+    /** CardViews whose card background should be set to primary */
+    open fun themedCardViewIds(): List<Int> = emptyList()
+
+    /** Plain Views (dividers, solid blocks) whose background colour = primary */
+    open fun themedSolidViewIds(): List<Int> = emptyList()
+
+    /** ProgressBars whose progress tint = primary */
     open fun themedProgressBarIds(): List<Int> = emptyList()
 
-    /** TextView IDs whose text colour should be primary */
+    /** TextViews whose text colour = primary */
     open fun themedTextViewIds(): List<Int> = emptyList()
 
-    /** ImageView IDs whose tint should be primary */
+    /** ImageViews whose imageTint = primary */
     open fun themedImageViewIds(): List<Int> = emptyList()
 
-    /** BottomNavigationView ID (or 0 if absent) */
+    /** BottomNavigationView ID (0 = absent) */
     open fun bottomNavId(): Int = 0
 
-    /**
-     * Call this at the end of onCreate(), after setContentView() and
-     * all view bindings.
-     */
+    // ── Lifecycle ─────────────────────────────────────────────────────────────
+
+    override fun onResume() {
+        super.onResume()
+        // Called on every resume so that coming back from ProfileActivity
+        // after a theme change re-colours this screen without recreating it.
+        applyCurrentTheme()
+    }
+
+    // ── Theme application ─────────────────────────────────────────────────────
+
     protected fun applyCurrentTheme() {
         val palette = ThemeManager.getPalette(this)
+        val primary = palette.primary
 
+        // Rounded-background views: buttons, avatar circles, chips
         themedBackgroundViewIds().forEach { id ->
-            runCatching { ThemeManager.tintBackground(findViewById(id), palette.primary) }
+            runCatching { ThemeManager.tintBackground(findViewById(id), primary) }
         }
 
+        // CardViews with solid primary background
+        themedCardViewIds().forEach { id ->
+            runCatching { findViewById<CardView>(id).setCardBackgroundColor(primary) }
+        }
+
+        // Plain View dividers / solid colour blocks
+        themedSolidViewIds().forEach { id ->
+            runCatching { findViewById<View>(id).setBackgroundColor(primary) }
+        }
+
+        // Progress bars
         themedProgressBarIds().forEach { id ->
-            runCatching {
-                val bar = findViewById<ProgressBar>(id)
-                ThemeManager.tintProgressBar(bar, palette.primary)
-            }
+            runCatching { ThemeManager.tintProgressBar(findViewById(id), primary) }
         }
 
+        // Text views
         themedTextViewIds().forEach { id ->
-            runCatching {
-                val tv = findViewById<TextView>(id)
-                ThemeManager.tintText(tv, palette.primary)
-            }
+            runCatching { ThemeManager.tintText(findViewById(id), primary) }
         }
 
+        // Image views
         themedImageViewIds().forEach { id ->
-            runCatching {
-                val iv = findViewById<ImageView>(id)
-                ThemeManager.tintImage(iv, palette.primary)
-            }
+            runCatching { ThemeManager.tintImage(findViewById(id), primary) }
         }
 
+        // ── Bottom Navigation ─────────────────────────────────────────────────
+        // We keep the icons' original drawable colours by setting a proper
+        // ColorStateList on itemIconTintList and itemTextColor.
+        // The UNSELECTED colour stays exactly as the original @color/nav_unselected.
         val navId = bottomNavId()
         if (navId != 0) {
             runCatching {
                 val nav = findViewById<BottomNavigationView>(navId)
-                ThemeManager.tintBottomNav(nav, palette.primary, 0xFF9CA3AF.toInt())
+                val unselected = 0xFF9CA3AF.toInt()  // @color/nav_unselected
+                val states = arrayOf(
+                    intArrayOf(android.R.attr.state_checked),
+                    intArrayOf(-android.R.attr.state_checked)
+                )
+                val csl = ColorStateList(states, intArrayOf(primary, unselected))
+                nav.itemIconTintList = csl
+                nav.itemTextColor    = csl
             }
         }
     }

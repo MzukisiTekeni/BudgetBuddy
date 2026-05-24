@@ -47,6 +47,9 @@ class CategoryAdapter(private val items: MutableList<CategoryItem>) :
 
 class ExpenseCategoriesActivity : BaseThemedActivity() {
 
+    override fun themedBackgroundViewIds() = listOf(R.id.btn_add_custom, R.id.btn_continue)
+
+
     private lateinit var repo: BudgetRepository
     private lateinit var adapter: CategoryAdapter
 

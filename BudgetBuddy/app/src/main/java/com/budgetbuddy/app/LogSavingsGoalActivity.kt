@@ -13,6 +13,9 @@ import java.util.*
 
 class LogSavingsGoalActivity : BaseThemedActivity() {
 
+    override fun themedBackgroundViewIds() = listOf(R.id.btn_create_goal)
+
+
     private lateinit var repo: BudgetRepository
     private var selectedFrequency = "Monthly"
     private var selectedDate = ""

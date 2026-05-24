@@ -41,11 +41,19 @@ class BudgetRowAdapter(
         h.name.text  = b.categoryName
         h.amt.text   = "R${"%,.2f".format(b.amount)}"
         h.edit.setOnClickListener { onEdit(b) }
+
+        // Apply current theme colour to the budget amount text
+        val primary = ThemeManager.getPalette(h.itemView.context).primary
+        h.amt.setTextColor(primary)
     }
 }
 
 // ── Activity ──────────────────────────────────────────────────────────────────
 class MonthlyBudgetActivity : BaseThemedActivity() {
+
+    override fun themedBackgroundViewIds() = listOf(R.id.btn_create_budget)
+    override fun themedCardViewIds()       = listOf(R.id.card_overall_budget)
+
 
     private lateinit var repo: BudgetRepository
     private var userId = -1

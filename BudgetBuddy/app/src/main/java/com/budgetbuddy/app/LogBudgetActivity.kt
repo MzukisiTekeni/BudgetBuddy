@@ -14,6 +14,10 @@ import java.time.format.DateTimeFormatter
 
 class LogBudgetActivity : BaseThemedActivity() {
 
+    override fun themedBackgroundViewIds() = listOf(R.id.btn_save_budget, R.id.btn_add_category)
+    override fun themedSolidViewIds()      = listOf(R.id.v_header_divider)
+
+
     private lateinit var repo: BudgetRepository
     private var selectedCategory: ExpenseCategoryEntity? = null
     private var categories = listOf<ExpenseCategoryEntity>()

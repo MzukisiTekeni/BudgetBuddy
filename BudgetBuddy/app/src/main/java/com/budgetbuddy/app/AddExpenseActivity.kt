@@ -19,6 +19,10 @@ import java.util.*
 
 class AddExpenseActivity : BaseThemedActivity() {
 
+    override fun themedBackgroundViewIds() = listOf(R.id.btn_save_expense, R.id.btn_add_category)
+    override fun themedSolidViewIds()      = listOf(R.id.v_header_divider)
+
+
     private lateinit var repo: BudgetRepository
     private var userId = -1                          // set once in onCreate from SessionManager
 

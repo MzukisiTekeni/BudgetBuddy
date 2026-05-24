@@ -157,6 +157,17 @@ class InsightAdapter(private val items: MutableList<Pair<String, String>>) :
 // ── Activity ──────────────────────────────────────────────────────────────────
 class StatisticsActivity : BaseThemedActivity() {
 
+    override fun onResume() {
+        super.onResume()  // calls applyCurrentTheme()
+        // Re-tint whichever chip is currently selected
+        val chipIds = mapOf("Week" to R.id.chip_week, "Month" to R.id.chip_month,
+            "3 Months" to R.id.chip_3months, "Year" to R.id.chip_year)
+        chipIds[currentPeriod]?.let { id ->
+            runCatching { ThemeManager.tintBackground(findViewById(id), ThemeManager.getPalette(this).primary) }
+        }
+    }
+
+
     private lateinit var repo: BudgetRepository
     private lateinit var insightAdapter: InsightAdapter
     private var currentPeriod = "Week"
@@ -180,6 +191,8 @@ class StatisticsActivity : BaseThemedActivity() {
 
         setupChips()
         loadStatsFor("Week")
+        // Tint initial selected chip with current theme
+        ThemeManager.tintBackground(findViewById(R.id.chip_week), ThemeManager.getPalette(this).primary)
     }
 
     private fun setupChips() {
@@ -201,7 +214,7 @@ class StatisticsActivity : BaseThemedActivity() {
                 findViewById<TextView>(id).apply {
                     setBackgroundResource(R.drawable.bg_chip_selected)
                     setTextColor(getColor(R.color.text_on_primary))
-                }
+                }.also { ThemeManager.tintBackground(it, ThemeManager.getPalette(this).primary) }
                 loadStatsFor(label)
             }
         }

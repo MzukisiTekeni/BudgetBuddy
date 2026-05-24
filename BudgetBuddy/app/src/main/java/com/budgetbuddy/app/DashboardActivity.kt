@@ -21,10 +21,20 @@ class DashboardActivity : BaseThemedActivity() {
         R.id.dash_badge_all_goals    to BadgeKeys.ALL_GOALS
     )
 
-    // ── BaseThemedActivity ────────────────────────────────────────────────────
-    override fun themedBackgroundViewIds() = listOf(R.id.fl_avatar)
-    override fun themedProgressBarIds()    = listOf(R.id.progress_xp, R.id.progress_budget)
-    override fun bottomNavId()             = R.id.bottom_nav
+    // ── Themed view IDs ───────────────────────────────────────────────────────
+    override fun themedBackgroundViewIds() = listOf(
+        R.id.fl_avatar,
+        R.id.btn_view_budget
+    )
+    override fun themedProgressBarIds() = listOf(
+        R.id.progress_xp,
+        R.id.progress_budget
+    )
+    override fun themedTextViewIds() = listOf(
+        R.id.btn_view_profile,
+        R.id.btn_view_profile1
+    )
+    override fun bottomNavId() = R.id.bottom_nav
 
     // ─────────────────────────────────────────────────────────────────────────
 
@@ -36,13 +46,12 @@ class DashboardActivity : BaseThemedActivity() {
         setupBottomNav()
         setupClickListeners()
         observeLiveData()
-
-        applyCurrentTheme()
+        // applyCurrentTheme() is called automatically by onResume()
     }
 
     private fun observeLiveData() {
         val userId = SessionManager.getUserId(this)
-        val month = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM"))
+        val month  = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM"))
 
         repo.getLoggedInUser(userId).observe(this) { user ->
             user ?: return@observe
@@ -57,11 +66,6 @@ class DashboardActivity : BaseThemedActivity() {
                 max      = user.level * 2000
                 progress = user.totalXp
             }
-            // Re-apply theme tint on XP bar after value update
-            ThemeManager.tintProgressBar(
-                findViewById(R.id.progress_xp),
-                ThemeManager.getPalette(this).primary
-            )
         }
 
         repo.getTotalBudget(userId, month).observe(this) { totalBudget ->
@@ -74,9 +78,9 @@ class DashboardActivity : BaseThemedActivity() {
         repo.getTotalSpentByMonth(userId, month).observe(this) { spent ->
             val s = spent ?: 0.0
             repo.getTotalBudget(userId, month).observe(this) { budget ->
-                val b = budget ?: 0.0
+                val b         = budget ?: 0.0
                 val remaining = (b - s).coerceAtLeast(0.0)
-                val pct = if (b > 0) ((s / b) * 100).toInt().coerceIn(0, 100) else 0
+                val pct       = if (b > 0) ((s / b) * 100).toInt().coerceIn(0, 100) else 0
                 findViewById<TextView>(R.id.tv_remaining).text    = "R${"%,.0f".format(remaining)} remaining"
                 findViewById<TextView>(R.id.tv_percent_used).text = "$pct% used"
                 findViewById<ProgressBar>(R.id.progress_budget).progress = pct
@@ -101,7 +105,6 @@ class DashboardActivity : BaseThemedActivity() {
     private fun setupBottomNav() {
         val nav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         nav.selectedItemId = R.id.nav_home
-        nav.itemIconTintList = null
         nav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home     -> true

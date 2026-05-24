@@ -126,6 +126,9 @@ class DonutScoreView @JvmOverloads constructor(
 // ── Activity ──────────────────────────────────────────────────────────────────
 class BudgetHealthActivity : BaseThemedActivity() {
 
+    override fun themedTextViewIds() = listOf(R.id.tv_health_label)
+
+
     private lateinit var repo: BudgetRepository
     private lateinit var adapter: HealthRowAdapter
     private var userId = -1

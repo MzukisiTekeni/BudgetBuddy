@@ -53,6 +53,13 @@ class GoalAdapter(
         h.btnAdd.visibility = if (g.isCompleted) View.GONE else View.VISIBLE
         h.btnAdd.setOnClickListener { onAddContribution(g) }
         h.itemView.setOnLongClickListener { if (!g.isCompleted) onLongPress(g); true }
+
+        // Apply current theme colours to per-row elements
+        val primary = ThemeManager.getPalette(h.itemView.context).primary
+        ThemeManager.tintProgressBar(h.progress, primary)
+        h.saved.setTextColor(primary)
+        h.percent.setTextColor(primary)
+        ThemeManager.tintBackground(h.btnAdd, primary)
     }
 
     fun update(newGoals: List<SavingsGoalEntity>) {
@@ -61,6 +68,10 @@ class GoalAdapter(
 }
 
 class SavingsGoalsActivity : BaseThemedActivity() {
+
+    override fun themedBackgroundViewIds() = listOf(R.id.btn_add_goal)
+    override fun themedCardViewIds()       = listOf(R.id.card_summary)
+
 
     private lateinit var repo: BudgetRepository
     private lateinit var adapter: GoalAdapter
