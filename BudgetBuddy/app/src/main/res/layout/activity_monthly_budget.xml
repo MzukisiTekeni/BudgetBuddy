@@ -108,6 +108,69 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+
+            <!-- ═════════════════════════════════════════════════════════════
+                 MINIMUM SPENDING GOAL CARD (new — for goal zone gauge)
+                 ═════════════════════════════════════════════════════════════ -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_min_goal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Minimum Spending Goal"
+                            android:textSize="@dimen/text_xs"
+                            android:textColor="@color/text_hint" />
+
+                        <TextView
+                            android:id="@+id/tv_min_goal_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to set →"
+                            android:textSize="@dimen/text_xl"
+                            android:textColor="@color/text_primary"
+                            android:fontFamily="sans-serif-medium"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Used in Budget Health goal zone gauge"
+                            android:textSize="@dimen/text_xs"
+                            android:textColor="@color/text_hint" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_edit"
+                        android:alpha="0.6"
+                        android:contentDescription="Edit minimum goal"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <!-- ═══════════════════════════════════════════════════════════════
                  SECTION 2 — CATEGORY BUDGETS
                  ═══════════════════════════════════════════════════════════════ -->

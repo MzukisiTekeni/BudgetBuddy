@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.*
 import android.widget.*
-// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.budgetbuddy.app.db.BudgetRepository
@@ -20,9 +19,15 @@ class SpendingBarChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : View(context, attrs) {
 
-    data class Bar(val label: String, val spent: Double, val budget: Double)
+    data class Bar(
+        val label: String,
+        val spent: Double,
+        val budget: Double,        // max goal
+        val minGoal: Double = 0.0  // min goal
+    )
 
     private var bars = emptyList<Bar>()
+    private var showGoalLines = true
 
     private val paintSpent = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#6366F1"); style = Paint.Style.FILL
@@ -33,35 +38,49 @@ class SpendingBarChartView @JvmOverloads constructor(
     private val paintOver = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#EF4444"); style = Paint.Style.FILL
     }
+    private val paintUnder = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.parseColor("#F59E0B"); style = Paint.Style.FILL
+    }
     private val paintLabel = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        // color set in setData() using context
         textAlign = Paint.Align.CENTER; textSize = 28f
     }
     private val paintAmount = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        // color set in setData() using context
         textAlign = Paint.Align.CENTER
         textSize = 22f; typeface = Typeface.DEFAULT_BOLD
     }
     private val paintGrid = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        // color set in setData() using context
         strokeWidth = 1f
+    }
+    private val paintMaxGoalLine = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.parseColor("#EF4444")
+        strokeWidth = 3f
+        style = Paint.Style.STROKE
+        pathEffect = DashPathEffect(floatArrayOf(12f, 6f), 0f)
+    }
+    private val paintMinGoalLine = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.parseColor("#22C55E")
+        strokeWidth = 3f
+        style = Paint.Style.STROKE
+        pathEffect = DashPathEffect(floatArrayOf(12f, 6f), 0f)
+    }
+    private val paintGoalLabel = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = 24f; textAlign = Paint.Align.LEFT; typeface = Typeface.DEFAULT_BOLD
     }
     private val paintLegendBox = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
     }
 
-    private var contextRef: android.content.Context? = null
-
-    fun setData(data: List<Bar>, ctx: android.content.Context? = null) {
+    fun setData(data: List<Bar>, ctx: Context? = null, showGoals: Boolean = true) {
         bars = data
+        showGoalLines = showGoals
         if (ctx != null) {
-            contextRef = ctx
             val isDark = (ctx.resources.configuration.uiMode and
                 android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
                 android.content.res.Configuration.UI_MODE_NIGHT_YES
             paintAmount.color = if (isDark) 0xFFF0F4F8.toInt() else 0xFF1A1A2E.toInt()
             paintLabel.color  = if (isDark) 0xFF9BA3B8.toInt() else 0xFF6B7280.toInt()
             paintGrid.color   = if (isDark) 0xFF2E3348.toInt() else 0xFFE5E7EB.toInt()
+            paintGoalLabel.color = if (isDark) 0xFF9BA3B8.toInt() else 0xFF6B7280.toInt()
         }
         invalidate()
     }
@@ -76,12 +95,13 @@ class SpendingBarChartView @JvmOverloads constructor(
         val padL    = 32f
         val padR    = 20f
         val padTop  = 28f
-        // Extra bottom padding: 36px for x-labels + 16px gap + 24px legend row + 12px margin
-        val padBot  = 88f
+        // extra room for 2 legend rows
+        val padBot  = 120f
         val chartW  = width  - padL - padR
         val chartH  = height - padTop - padBot
 
-        val maxVal = bars.maxOf { maxOf(it.spent, it.budget) }.let { if (it == 0.0) 1.0 else it }
+        val maxVal = bars.maxOf { maxOf(it.spent, it.budget, it.minGoal) }
+            .let { if (it == 0.0) 1.0 else it }
 
         // Horizontal grid lines
         for (i in 0..4) {
@@ -96,55 +116,87 @@ class SpendingBarChartView @JvmOverloads constructor(
         bars.forEachIndexed { idx, bar ->
             val groupX = padL + idx * groupW + groupW / 2f
 
-            // Budget bar
+            // Budget (max goal) bar — background
             val budgetH = (bar.budget / maxVal * chartH).toFloat()
             val bLeft   = groupX - barW - gap / 2f
             val bTop    = padTop + chartH - budgetH
-            canvas.drawRoundRect(bLeft, bTop, bLeft + barW, padTop + chartH, 8f, 8f, paintBudget)
+            if (bar.budget > 0) {
+                canvas.drawRoundRect(bLeft, bTop, bLeft + barW, padTop + chartH, 8f, 8f, paintBudget)
+            }
 
-            // Spent bar
+            // Spent bar — colour based on goal zone
             val spentH    = (bar.spent / maxVal * chartH).toFloat().coerceAtMost(chartH.toFloat())
             val sLeft     = groupX + gap / 2f
             val sTop      = padTop + chartH - spentH
-            val overPaint = if (bar.spent > bar.budget) paintOver else paintSpent
-            canvas.drawRoundRect(sLeft, sTop, sLeft + barW, padTop + chartH, 8f, 8f, overPaint)
+            val barPaint = when {
+                bar.spent > bar.budget && bar.budget > 0 -> paintOver
+                bar.minGoal > 0 && bar.spent < bar.minGoal -> paintUnder
+                else -> paintSpent
+            }
+            canvas.drawRoundRect(sLeft, sTop, sLeft + barW, padTop + chartH, 8f, 8f, barPaint)
 
-            // Amount label above spent bar (only if bar has height)
+            // Amount label above spent bar
             if (bar.spent > 0) {
                 val amtText = "R${"%,.0f".format(bar.spent)}"
                 canvas.drawText(amtText, sLeft + barW / 2f,
                     (sTop - 8f).coerceAtLeast(padTop + 14f), paintAmount)
             }
 
-            // X-axis label — sits below the chart with proper vertical spacing
+            // X-axis label
             canvas.drawText(bar.label, groupX, padTop + chartH + 34f, paintLabel)
         }
 
-        // ── Legend row — sits below the x-axis labels with horizontal spacing ──
-        val legendY   = padTop + chartH + 70f   // 36px below x-axis baseline
+        // ── Draw min/max goal lines across the full chart width ──────────────
+        if (showGoalLines) {
+            val avgMaxGoal = bars.filter { it.budget > 0 }.map { it.budget }.average()
+            val avgMinGoal = bars.filter { it.minGoal > 0 }.map { it.minGoal }.average()
+
+            if (!avgMaxGoal.isNaN() && avgMaxGoal > 0) {
+                val maxGoalY = padTop + chartH - (avgMaxGoal / maxVal * chartH).toFloat()
+                canvas.drawLine(padL, maxGoalY, padL + chartW, maxGoalY, paintMaxGoalLine)
+                paintGoalLabel.color = paintMaxGoalLine.color
+                canvas.drawText("Max", padL + 4f, maxGoalY - 6f, paintGoalLabel)
+            }
+
+            if (!avgMinGoal.isNaN() && avgMinGoal > 0) {
+                val minGoalY = padTop + chartH - (avgMinGoal / maxVal * chartH).toFloat()
+                canvas.drawLine(padL, minGoalY, padL + chartW, minGoalY, paintMinGoalLine)
+                paintGoalLabel.color = paintMinGoalLine.color
+                canvas.drawText("Min", padL + 4f, minGoalY - 6f, paintGoalLabel)
+            }
+        }
+
+        // ── Legend row 1: Budget / Spent / Over ─────────────────────────────
+        val legendY1  = padTop + chartH + 68f
+        val legendY2  = padTop + chartH + 96f
         val boxSize   = 14f
         val textGap   = 6f
-        val legendGap = 48f                      // horizontal gap between the two items
 
-        // Measure text widths to centre the pair
         paintLabel.textAlign = Paint.Align.LEFT
-        val budgetTextW = paintLabel.measureText("Budget")
-        val spentTextW  = paintLabel.measureText("Spent")
-        val totalW      = boxSize + textGap + budgetTextW + legendGap + boxSize + textGap + spentTextW
-        var lx          = (width - totalW) / 2f
 
-        // Budget box + label
+        // Row 1
+        var lx = padL
         paintLegendBox.color = paintBudget.color
-        canvas.drawRoundRect(lx, legendY - boxSize, lx + boxSize, legendY, 3f, 3f, paintLegendBox)
-        canvas.drawText("Budget", lx + boxSize + textGap, legendY, paintLabel)
-        lx += boxSize + textGap + budgetTextW + legendGap
+        canvas.drawRoundRect(lx, legendY1 - boxSize, lx + boxSize, legendY1, 3f, 3f, paintLegendBox)
+        canvas.drawText("Max Goal", lx + boxSize + textGap, legendY1, paintLabel)
+        lx += boxSize + textGap + paintLabel.measureText("Max Goal") + 20f
 
-        // Spent box + label
         paintLegendBox.color = paintSpent.color
-        canvas.drawRoundRect(lx, legendY - boxSize, lx + boxSize, legendY, 3f, 3f, paintLegendBox)
-        canvas.drawText("Spent", lx + boxSize + textGap, legendY, paintLabel)
+        canvas.drawRoundRect(lx, legendY1 - boxSize, lx + boxSize, legendY1, 3f, 3f, paintLegendBox)
+        canvas.drawText("On Track", lx + boxSize + textGap, legendY1, paintLabel)
 
-        paintLabel.textAlign = Paint.Align.CENTER  // restore default
+        // Row 2
+        lx = padL
+        paintLegendBox.color = paintOver.color
+        canvas.drawRoundRect(lx, legendY2 - boxSize, lx + boxSize, legendY2, 3f, 3f, paintLegendBox)
+        canvas.drawText("Over Max", lx + boxSize + textGap, legendY2, paintLabel)
+        lx += boxSize + textGap + paintLabel.measureText("Over Max") + 20f
+
+        paintLegendBox.color = paintUnder.color
+        canvas.drawRoundRect(lx, legendY2 - boxSize, lx + boxSize, legendY2, 3f, 3f, paintLegendBox)
+        canvas.drawText("Below Min", lx + boxSize + textGap, legendY2, paintLabel)
+
+        paintLabel.textAlign = Paint.Align.CENTER
     }
 }
 
@@ -175,15 +227,13 @@ class InsightAdapter(private val items: MutableList<Pair<String, String>>) :
 class StatisticsActivity : BaseThemedActivity() {
 
     override fun onResume() {
-        super.onResume()  // calls applyCurrentTheme()
-        // Re-tint whichever chip is currently selected
+        super.onResume()
         val chipIds = mapOf("Week" to R.id.chip_week, "Month" to R.id.chip_month,
             "3 Months" to R.id.chip_3months, "Year" to R.id.chip_year)
         chipIds[currentPeriod]?.let { id ->
             runCatching { ThemeManager.tintBackground(findViewById(id), ThemeManager.getPalette(this).primary) }
         }
     }
-
 
     private lateinit var repo: BudgetRepository
     private lateinit var insightAdapter: InsightAdapter
@@ -208,7 +258,6 @@ class StatisticsActivity : BaseThemedActivity() {
 
         setupChips()
         loadStatsFor("Week")
-        // Tint initial selected chip with current theme
         ThemeManager.tintBackground(findViewById(R.id.chip_week), ThemeManager.getPalette(this).primary)
     }
 
@@ -266,22 +315,37 @@ class StatisticsActivity : BaseThemedActivity() {
             val budgetMap    = budgets.associateBy { it.categoryName }
             val topCategory  = spending.maxByOrNull { it.total }?.categoryName ?: "–"
 
-            // Bar chart data
+            // Load min and max goals from SharedPreferences
+            val maxGoal = repo.loadOverallBudget(this@StatisticsActivity, userId)
+            val minGoal = repo.loadMinGoal(this@StatisticsActivity, userId)
+
+            // Bar chart data — category view (non-week periods)
             val barData = spending.take(6).map { s ->
-                val budget     = budgetMap[s.categoryName]?.amount ?: 0.0
+                val catBudget  = budgetMap[s.categoryName]?.amount ?: 0.0
                 val shortLabel = s.categoryEmoji.ifEmpty { s.categoryName.take(4) }
-                SpendingBarChartView.Bar(shortLabel, s.total, budget)
+                // Distribute min/max proportionally to category budget if available
+                val catMinGoal = if (maxGoal > 0 && catBudget > 0 && minGoal > 0)
+                    minGoal * (catBudget / maxGoal) else 0.0
+                SpendingBarChartView.Bar(shortLabel, s.total, catBudget, catMinGoal)
             }
+
             val finalBarData: List<SpendingBarChartView.Bar> = if (period == "Week") {
-                val dailyTotals = repo.expenseDao.getDailyTotals(userId, fromDate)
-                val dayNames    = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-                val dayMap      = dailyTotals.associateBy { it.date }
+                val dailyTotals  = repo.expenseDao.getDailyTotals(userId, fromDate)
+                val dayNames     = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                val dayMap       = dailyTotals.associateBy { it.date }
+                val totalMonthBudget = repo.budgetDao.getTotalBudgetForMonthNow(userId, currentMonth)
+                val dailyMaxGoal = if (maxGoal > 0) maxGoal / 30.0 else totalMonthBudget / 30.0
+                val dailyMinGoal = if (minGoal > 0) minGoal / 30.0 else 0.0
                 (0..6).map { offset ->
                     val date     = now.minusDays((6 - offset).toLong())
                     val dateStr  = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
                     val spentAmt = dayMap[dateStr]?.total ?: 0.0
-                    val dayBudget = repo.budgetDao.getTotalBudgetForMonthNow(userId, currentMonth) / 30.0
-                    SpendingBarChartView.Bar(dayNames[date.dayOfWeek.value - 1], spentAmt, dayBudget)
+                    SpendingBarChartView.Bar(
+                        dayNames[date.dayOfWeek.value - 1],
+                        spentAmt,
+                        dailyMaxGoal,
+                        dailyMinGoal
+                    )
                 }
             } else barData
 
@@ -297,8 +361,6 @@ class StatisticsActivity : BaseThemedActivity() {
             val vsLastPct = if (prevTotal > 0) ((total - prevTotal) / prevTotal * 100).toInt() else 0
             val vsText    = if (vsLastPct >= 0) "+$vsLastPct%" else "$vsLastPct%"
 
-            // ── Load overall budget for cross-checks ─────────────────────
-            val overallBudget   = repo.loadOverallBudget(this@StatisticsActivity, userId)
             val totalCatBudgets = budgets.sumOf { it.amount }
 
             // Insights
@@ -307,23 +369,44 @@ class StatisticsActivity : BaseThemedActivity() {
             if (total == 0.0) {
                 insights.add("💡" to "No expenses recorded for this period yet. Start logging to see insights.")
             } else {
-                // 1. Overall budget vs total spending
-                if (overallBudget > 0) {
+                // 1. Min/Max goal zone assessment
+                if (maxGoal > 0 && minGoal > 0) {
                     when {
-                        total > overallBudget -> {
-                            val over = total - overallBudget
+                        total > maxGoal -> {
+                            val over = total - maxGoal
+                            insights.add("🚨" to "You've exceeded your maximum spending goal " +
+                                "(R${"%,.0f".format(maxGoal)}) by R${"%,.0f".format(over)}. " +
+                                "Immediate action needed!")
+                        }
+                        total < minGoal -> {
+                            val under = minGoal - total
+                            insights.add("💛" to "Spending is R${"%,.0f".format(under)} below your " +
+                                "minimum goal (R${"%,.0f".format(minGoal)}). " +
+                                "You may have unrecorded expenses.")
+                        }
+                        else -> {
+                            val usedPct = ((total / maxGoal) * 100).toInt()
+                            insights.add("✅" to "Spending is within your goal range " +
+                                "(R${"%,.0f".format(minGoal)} – R${"%,.0f".format(maxGoal)}). " +
+                                "You've used $usedPct% of your max budget. Well done!")
+                        }
+                    }
+                } else if (maxGoal > 0) {
+                    when {
+                        total > maxGoal -> {
+                            val over = total - maxGoal
                             insights.add("🚨" to "You have exceeded your overall monthly budget " +
-                                "(R${"%,.0f".format(overallBudget)}) by R${"%,.0f".format(over)}. " +
+                                "(R${"%,.0f".format(maxGoal)}) by R${"%,.0f".format(over)}. " +
                                 "Review your spending immediately.")
                         }
-                        total >= overallBudget * 0.90 -> {
-                            val remaining = overallBudget - total
-                            insights.add("⚠️" to "You have used ${((total/overallBudget)*100).toInt()}% of your monthly budget. " +
+                        total >= maxGoal * 0.90 -> {
+                            val remaining = maxGoal - total
+                            insights.add("⚠️" to "You have used ${((total/maxGoal)*100).toInt()}% of your monthly budget. " +
                                 "Only R${"%,.0f".format(remaining)} remaining — spend carefully.")
                         }
                         else -> {
-                            val remaining = overallBudget - total
-                            val usedPct   = ((total / overallBudget) * 100).toInt()
+                            val remaining = maxGoal - total
+                            val usedPct   = ((total / maxGoal) * 100).toInt()
                             insights.add("✅" to "You have used $usedPct% of your monthly budget. " +
                                 "R${"%,.0f".format(remaining)} still available.")
                         }
@@ -331,10 +414,10 @@ class StatisticsActivity : BaseThemedActivity() {
                 }
 
                 // 2. Category budgets sum vs overall budget
-                if (overallBudget > 0 && totalCatBudgets > overallBudget) {
-                    val excess = totalCatBudgets - overallBudget
+                if (maxGoal > 0 && totalCatBudgets > maxGoal) {
+                    val excess = totalCatBudgets - maxGoal
                     insights.add("⚠️" to "Your category budgets total R${"%,.0f".format(totalCatBudgets)}, " +
-                        "exceeding your overall budget by R${"%,.0f".format(excess)}. " +
+                        "exceeding your max goal by R${"%,.0f".format(excess)}. " +
                         "Reduce some category limits on the Monthly Budget page.")
                 }
 
@@ -394,7 +477,11 @@ class StatisticsActivity : BaseThemedActivity() {
                 vsTv.text = vsText
                 vsTv.setTextColor(if (vsLastPct <= 0) ThemeManager.getPalette(this@StatisticsActivity).primary else getColor(R.color.goal_red))
                 insightAdapter.update(insights)
-                findViewById<SpendingBarChartView>(R.id.bar_chart).setData(finalBarData, this@StatisticsActivity)
+                findViewById<SpendingBarChartView>(R.id.bar_chart).setData(
+                    finalBarData,
+                    this@StatisticsActivity,
+                    showGoals = (maxGoal > 0 || minGoal > 0)
+                )
             }
         }
     }

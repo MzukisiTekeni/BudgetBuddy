@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-// AppCompatActivity replaced by BaseThemedActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.budgetbuddy.app.db.BudgetEntity
@@ -41,8 +40,6 @@ class BudgetRowAdapter(
         h.name.text  = b.categoryName
         h.amt.text   = "R${"%,.2f".format(b.amount)}"
         h.edit.setOnClickListener { onEdit(b) }
-
-        // Apply current theme colour to the budget amount text
         val primary = ThemeManager.getPalette(h.itemView.context).primary
         h.amt.setTextColor(primary)
     }
@@ -54,7 +51,6 @@ class MonthlyBudgetActivity : BaseThemedActivity() {
     override fun themedBackgroundViewIds() = emptyList<Int>()
     override fun themedImageViewIds()      = listOf(R.id.btn_create_budget)
     override fun themedCardViewIds()       = listOf(R.id.card_overall_budget)
-
 
     private lateinit var repo: BudgetRepository
     private var userId = -1
@@ -71,14 +67,14 @@ class MonthlyBudgetActivity : BaseThemedActivity() {
         findViewById<ImageView>(R.id.iv_back).setOnClickListener { finish() }
 
         setupOverallBudgetCard()
+        setupMinGoalCard()
         setupCategoryBudgetList()
         checkCategoriesWithoutBudgets()
     }
 
-    // ── Overall budget card ───────────────────────────────────────────────────
+    // ── Maximum budget (overall) card ─────────────────────────────────────────
     private fun setupOverallBudgetCard() {
         val tvOverall = findViewById<TextView>(R.id.tv_overall_budget_amount)
-        // Returns 0.0 by default — shows "Tap to set" until user enters a value
         val current   = repo.loadOverallBudget(this, userId)
         tvOverall.text = if (current > 0) "R${"%,.2f".format(current)}" else "Tap to set →"
 
@@ -94,8 +90,8 @@ class MonthlyBudgetActivity : BaseThemedActivity() {
         if (current > 0) etAmt.setText(current.toBigDecimal().stripTrailingZeros().toPlainString())
 
         AlertDialog.Builder(this, R.style.Style_ThemedDialog)
-            .setTitle("💰 Set Overall Monthly Budget")
-            .setMessage("This is the total amount you plan to spend this month. It appears on your Dashboard.")
+            .setTitle("💰 Set Maximum Monthly Budget")
+            .setMessage("This is the maximum total you plan to spend this month. Exceeding this shows as 'Over' in Budget Health.")
             .setView(view)
             .setPositiveButton("Save") { _, _ ->
                 val amount = etAmt.text.toString().toDoubleOrNull()
@@ -106,18 +102,59 @@ class MonthlyBudgetActivity : BaseThemedActivity() {
                 repo.saveOverallBudget(this, userId, amount)
                 val tvOverall = findViewById<TextView>(R.id.tv_overall_budget_amount)
                 tvOverall.text = "R${"%,.2f".format(amount)}"
-                Toast.makeText(this, "Overall budget saved ✓", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Maximum budget saved ✓", Toast.LENGTH_SHORT).show()
                 lifecycleScope.launch {
                     repo.addNotification(
                         userId     = userId,
                         icon       = "💰",
-                        title      = "Overall budget set",
-                        body       = "Your monthly budget is R${"%,.2f".format(amount)}",
+                        title      = "Maximum budget set",
+                        body       = "Your monthly maximum budget is R${"%,.2f".format(amount)}",
                         time       = SimpleDateFormat("h:mm a", java.util.Locale.getDefault()).format(Date()),
                         tag        = "INSIGHT",
                         groupLabel = "Today"
                     )
                 }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    // ── Minimum spending goal card (NEW) ──────────────────────────────────────
+    private fun setupMinGoalCard() {
+        val tvMinGoal = findViewById<TextView?>(R.id.tv_min_goal_amount) ?: return
+        val current   = repo.loadMinGoal(this, userId)
+        tvMinGoal.text = if (current > 0) "R${"%,.2f".format(current)}" else "Tap to set →"
+
+        findViewById<View?>(R.id.card_min_goal)?.setOnClickListener {
+            showSetMinGoalDialog()
+        }
+    }
+
+    private fun showSetMinGoalDialog() {
+        val view    = LayoutInflater.from(this).inflate(R.layout.dialog_set_budget, null)
+        val etAmt   = view.findViewById<EditText>(R.id.et_dialog_amount)
+        val current = repo.loadMinGoal(this, userId)
+        if (current > 0) etAmt.setText(current.toBigDecimal().stripTrailingZeros().toPlainString())
+
+        AlertDialog.Builder(this, R.style.Style_ThemedDialog)
+            .setTitle("🎯 Set Minimum Spending Goal")
+            .setMessage("This is the minimum expected monthly spend. Spending below this is flagged in Budget Health as potentially missing expenses.")
+            .setView(view)
+            .setPositiveButton("Save") { _, _ ->
+                val amount = etAmt.text.toString().toDoubleOrNull()
+                if (amount == null || amount <= 0) {
+                    Toast.makeText(this, "Enter a valid amount", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+                val maxGoal = repo.loadOverallBudget(this, userId)
+                if (maxGoal > 0 && amount >= maxGoal) {
+                    Toast.makeText(this, "Minimum goal must be less than the maximum budget", Toast.LENGTH_LONG).show()
+                    return@setPositiveButton
+                }
+                repo.saveMinGoal(this, userId, amount)
+                val tvMin = findViewById<TextView?>(R.id.tv_min_goal_amount)
+                tvMin?.text = "R${"%,.2f".format(amount)}"
+                Toast.makeText(this, "Minimum goal saved ✓", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel", null)
             .show()
@@ -195,6 +232,7 @@ class MonthlyBudgetActivity : BaseThemedActivity() {
     override fun onResume() {
         super.onResume()
         setupOverallBudgetCard()
+        setupMinGoalCard()
         checkCategoriesWithoutBudgets()
     }
 }

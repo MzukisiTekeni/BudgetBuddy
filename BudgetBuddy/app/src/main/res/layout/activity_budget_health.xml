@@ -46,18 +46,12 @@
                     android:gravity="center"
                     android:padding="@dimen/spacing_base">
 
-                    <!--
-                        DonutScoreView — a pure Canvas circle ring drawn in BudgetHealthActivity.kt.
-                        No third-party library needed.
-                        Call donutScoreView.setScore(75) from the activity.
-                    -->
                     <com.budgetbuddy.app.DonutScoreView
                         android:id="@+id/donut_health_score"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_gravity="center_horizontal" />
 
-                    <!-- Dynamic label: "Great 🟢" / "Fair 🟡" / "At Risk 🔴" -->
                     <TextView
                         android:id="@+id/tv_health_label"
                         android:layout_width="wrap_content"
@@ -118,6 +112,117 @@
                                 android:text="@string/label_overspent" android:textSize="@dimen/text_xs" android:textColor="@color/text_hint" />
                         </LinearLayout>
                     </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 GOAL ZONE GAUGE CARD (new — fulfils the requirement to show
+                 how well the user is staying between min and max goals)
+                 ═══════════════════════════════════════════════════════════ -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_base"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <!-- Title row with icon -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/spacing_sm">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Spending Goal Zone"
+                            android:textSize="@dimen/text_body"
+                            android:textColor="@color/text_primary"
+                            android:fontFamily="sans-serif-medium"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_goal_zone_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="—"
+                            android:textSize="@dimen/text_xs"
+                            android:textColor="@color/text_hint" />
+                    </LinearLayout>
+
+                    <!-- The custom gauge view -->
+                    <com.budgetbuddy.app.GoalZoneGaugeView
+                        android:id="@+id/goal_zone_gauge"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:layout_marginTop="4dp" />
+
+                    <!-- Legend row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/spacing_xs">
+
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:background="#F59E0B"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Below Min"
+                            android:textSize="@dimen/text_xs"
+                            android:textColor="@color/text_hint"
+                            android:layout_marginEnd="16dp" />
+
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:background="#22C55E"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="On Track"
+                            android:textSize="@dimen/text_xs"
+                            android:textColor="@color/text_hint"
+                            android:layout_marginEnd="16dp" />
+
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:background="#EF4444"
+                            android:layout_marginEnd="4dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Over Max"
+                            android:textSize="@dimen/text_xs"
+                            android:textColor="@color/text_hint" />
+                    </LinearLayout>
+
+                    <!-- Tip text about setting goals -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:text="💡 Set minimum and maximum goals in Monthly Budget to activate this gauge."
+                        android:textSize="@dimen/text_xs"
+                        android:textColor="@color/text_hint"
+                        android:lineSpacingMultiplier="1.3" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

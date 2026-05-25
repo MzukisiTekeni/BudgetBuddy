@@ -197,6 +197,19 @@ class BudgetRepository(context: Context) {
         prefs.edit().putFloat("balance_$userId", (current + delta).toFloat()).apply()
     }
 
+    // ── Minimum spending goal (SharedPreferences, keyed by userId) ────────────
+    // The minimum goal is the lowest acceptable spend for the month.
+    // Spending below this may indicate unlogged expenses.
+
+    fun saveMinGoal(context: Context, userId: Int, amount: Double) {
+        budgetPrefs(context).edit()
+            .putFloat("min_goal_$userId", amount.toFloat())
+            .apply()
+    }
+
+    fun loadMinGoal(context: Context, userId: Int): Double =
+        budgetPrefs(context).getFloat("min_goal_$userId", 0f).toDouble()
+
     // ── Savings Goals ─────────────────────────────────────────────────────────
 
     fun getActiveGoals(userId: Int): LiveData<List<SavingsGoalEntity>> =
