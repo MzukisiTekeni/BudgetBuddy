@@ -1,5 +1,7 @@
 package com.budgetbuddy.app
 
+import android.app.Dialog
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.*
@@ -38,7 +40,8 @@ class ExpenseGroupAdapter(private val groups: MutableList<ExpenseGroup>) :
         val chevron: ImageView = v.findViewById(R.id.iv_group_chevron)
     }
     inner class ChildVH(v: View) : RecyclerView.ViewHolder(v) {
-        val desc: TextView = v.findViewById(R.id.tv_sub_description)
+        val desc: TextView     = v.findViewById(R.id.tv_sub_description)
+        val receipt: ImageView = v.findViewById(R.id.iv_receipt_thumb)
     }
 
     override fun getItemViewType(p: Int) = if (rows()[p].item == null) HEADER else CHILD
@@ -70,6 +73,32 @@ class ExpenseGroupAdapter(private val groups: MutableList<ExpenseGroup>) :
             is ChildVH -> {
                 val exp = row.item!!
                 holder.desc.text = "${exp.description.ifEmpty { exp.categoryName }} — R${"%,.2f".format(exp.amount)}"
+
+                // Show actual receipt thumbnail if one was saved, otherwise show placeholder icon
+                if (exp.receiptPath.isNotEmpty()) {
+                    try {
+                        holder.receipt.setImageURI(Uri.parse(exp.receiptPath))
+                        holder.receipt.visibility = View.VISIBLE
+                        // Tap to view full-screen receipt
+                        holder.receipt.setOnClickListener {
+                            val dialog = Dialog(holder.itemView.context,
+                                android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+                            val iv = ImageView(holder.itemView.context)
+                            iv.setImageURI(Uri.parse(exp.receiptPath))
+                            iv.scaleType = ImageView.ScaleType.FIT_CENTER
+                            iv.setOnClickListener { dialog.dismiss() }
+                            dialog.setContentView(iv)
+                            dialog.show()
+                        }
+                    } catch (e: Exception) {
+                        holder.receipt.setImageResource(R.drawable.ic_image)
+                        holder.receipt.setOnClickListener(null)
+                    }
+                } else {
+                    holder.receipt.setImageResource(R.drawable.ic_image)
+                    holder.receipt.visibility = View.VISIBLE
+                    holder.receipt.setOnClickListener(null)
+                }
             }
         }
     }

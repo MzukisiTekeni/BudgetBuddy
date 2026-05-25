@@ -10,6 +10,13 @@
         android:layout_width="0dp" android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="13sp" android:textColor="@color/text_secondary"/>
-    <ImageView android:layout_width="24dp" android:layout_height="24dp"
-        android:src="@drawable/ic_image" android:contentDescription="Receipt"/>
+    <ImageView
+        android:id="@+id/iv_receipt_thumb"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_image"
+        android:contentDescription="Receipt"
+        android:clickable="true"
+        android:focusable="true" />
 </LinearLayout>
