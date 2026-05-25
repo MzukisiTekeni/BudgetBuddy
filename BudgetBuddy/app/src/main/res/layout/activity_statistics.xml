@@ -20,68 +20,94 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!-- Period chips -->
-        <LinearLayout
+        <!-- Period chips — Day / Week / Month / 3M / Year -->
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/spacing_sm">
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:scrollbars="none">
 
-            <TextView
-                android:id="@+id/chip_week"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginEnd="@dimen/spacing_xs"
-                android:background="@drawable/bg_chip_selected"
-                android:text="@string/filter_week"
-                android:textSize="@dimen/text_sm"
-                android:textColor="@color/text_on_primary"
-                android:gravity="center"
-                android:paddingStart="@dimen/spacing_base"
-                android:paddingEnd="@dimen/spacing_base"
-                android:clickable="true" android:focusable="true" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/chip_month"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginEnd="@dimen/spacing_xs"
-                android:background="@drawable/bg_chip_unselected"
-                android:text="@string/filter_month"
-                android:textSize="@dimen/text_sm"
-                android:textColor="@color/text_secondary"
-                android:gravity="center"
-                android:paddingStart="@dimen/spacing_base"
-                android:paddingEnd="@dimen/spacing_base"
-                android:clickable="true" android:focusable="true" />
+                <!-- Day chip -->
+                <TextView
+                    android:id="@+id/chip_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="@dimen/spacing_xs"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="Day"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/spacing_base"
+                    android:paddingEnd="@dimen/spacing_base"
+                    android:clickable="true" android:focusable="true" />
 
-            <TextView
-                android:id="@+id/chip_3months"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginEnd="@dimen/spacing_xs"
-                android:background="@drawable/bg_chip_unselected"
-                android:text="@string/filter_3months"
-                android:textSize="@dimen/text_sm"
-                android:textColor="@color/text_secondary"
-                android:gravity="center"
-                android:paddingStart="@dimen/spacing_base"
-                android:paddingEnd="@dimen/spacing_base"
-                android:clickable="true" android:focusable="true" />
+                <!-- Week chip -->
+                <TextView
+                    android:id="@+id/chip_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="@dimen/spacing_xs"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="@string/filter_week"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/spacing_base"
+                    android:paddingEnd="@dimen/spacing_base"
+                    android:clickable="true" android:focusable="true" />
 
-            <TextView
-                android:id="@+id/chip_year"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:background="@drawable/bg_chip_unselected"
-                android:text="@string/filter_year"
-                android:textSize="@dimen/text_sm"
-                android:textColor="@color/text_secondary"
-                android:gravity="center"
-                android:paddingStart="@dimen/spacing_base"
-                android:paddingEnd="@dimen/spacing_base"
-                android:clickable="true" android:focusable="true" />
-        </LinearLayout>
+                <!-- Month chip — selected by default -->
+                <TextView
+                    android:id="@+id/chip_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="@dimen/spacing_xs"
+                    android:background="@drawable/bg_chip_selected"
+                    android:text="@string/filter_month"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_on_primary"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/spacing_base"
+                    android:paddingEnd="@dimen/spacing_base"
+                    android:clickable="true" android:focusable="true" />
+
+                <!-- 3 Months chip -->
+                <TextView
+                    android:id="@+id/chip_3months"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="@dimen/spacing_xs"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="@string/filter_3months"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/spacing_base"
+                    android:paddingEnd="@dimen/spacing_base"
+                    android:clickable="true" android:focusable="true" />
+
+                <!-- Year chip -->
+                <TextView
+                    android:id="@+id/chip_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:text="@string/filter_year"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/spacing_base"
+                    android:paddingEnd="@dimen/spacing_base"
+                    android:clickable="true" android:focusable="true" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -202,7 +228,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Bar chart card — uses SpendingBarChartView (no third-party lib) -->
+            <!-- Bar chart card — category breakdown for all periods -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -221,20 +247,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/spacing_xs"
-                        android:text="Spending vs Budget"
+                        android:text="Category Spending vs Budget"
                         android:textSize="@dimen/text_body"
                         android:textColor="@color/text_primary"
                         android:fontFamily="sans-serif-medium"
                         android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/tv_chart_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_xs"
+                        android:text="Grey = budget · Coloured = spent · Dashed lines = Min/Max goals"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary" />
+
                     <!--
                         SpendingBarChartView drawn in StatisticsActivity.kt using Canvas.
-                        No dependency needed — just call bar_chart.setData(listOf(...)).
+                        Each period shows category bars (budget vs spent) with min/max goal lines.
                     -->
                     <com.budgetbuddy.app.SpendingBarChartView
                         android:id="@+id/bar_chart"
                         android:layout_width="match_parent"
-                        android:layout_height="240dp" />
+                        android:layout_height="260dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

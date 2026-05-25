@@ -95,8 +95,8 @@ class SpendingBarChartView @JvmOverloads constructor(
         val padL    = 32f
         val padR    = 20f
         val padTop  = 28f
-        // extra room for 2 legend rows
-        val padBot  = 120f
+        // extra room for 2-line x labels + 2 legend rows
+        val padBot  = 148f
         val chartW  = width  - padL - padR
         val chartH  = height - padTop - padBot
 
@@ -126,14 +126,16 @@ class SpendingBarChartView @JvmOverloads constructor(
 
             // Spent bar — colour based on goal zone
             val spentH    = (bar.spent / maxVal * chartH).toFloat().coerceAtMost(chartH.toFloat())
-            val sLeft     = groupX + gap / 2f
+            val sLeft     = if (bar.budget > 0) groupX + gap / 2f else groupX - barW / 2f
             val sTop      = padTop + chartH - spentH
             val barPaint = when {
                 bar.spent > bar.budget && bar.budget > 0 -> paintOver
                 bar.minGoal > 0 && bar.spent < bar.minGoal -> paintUnder
                 else -> paintSpent
             }
-            canvas.drawRoundRect(sLeft, sTop, sLeft + barW, padTop + chartH, 8f, 8f, barPaint)
+            if (bar.spent > 0) {
+                canvas.drawRoundRect(sLeft, sTop, sLeft + barW, padTop + chartH, 8f, 8f, barPaint)
+            }
 
             // Amount label above spent bar
             if (bar.spent > 0) {
@@ -142,14 +144,28 @@ class SpendingBarChartView @JvmOverloads constructor(
                     (sTop - 8f).coerceAtLeast(padTop + 14f), paintAmount)
             }
 
-            // X-axis label
-            canvas.drawText(bar.label, groupX, padTop + chartH + 34f, paintLabel)
+            // X-axis label — split "emoji name" into two lines for readability
+            val labelParts = bar.label.split(" ", limit = 2)
+            if (labelParts.size == 2) {
+                canvas.drawText(labelParts[0], groupX, padTop + chartH + 30f, paintLabel)
+                canvas.drawText(labelParts[1], groupX, padTop + chartH + 54f, paintLabel)
+            } else {
+                canvas.drawText(bar.label, groupX, padTop + chartH + 38f, paintLabel)
+            }
         }
 
         // ── Draw min/max goal lines across the full chart width ──────────────
         if (showGoalLines) {
-            val avgMaxGoal = bars.filter { it.budget > 0 }.map { it.budget }.average()
-            val avgMinGoal = bars.filter { it.minGoal > 0 }.map { it.minGoal }.average()
+            val barsWithBudget = bars.filter { it.budget > 0 }
+            val barsWithMin    = bars.filter { it.minGoal > 0 }
+
+            // For category charts: use a single representative max/min line
+            // derived from the total goals scaled to chart max, so lines are
+            // always meaningful regardless of period
+            val avgMaxGoal = if (barsWithBudget.isNotEmpty())
+                barsWithBudget.map { it.budget }.average() else Double.NaN
+            val avgMinGoal = if (barsWithMin.isNotEmpty())
+                barsWithMin.map { it.minGoal }.average() else Double.NaN
 
             if (!avgMaxGoal.isNaN() && avgMaxGoal > 0) {
                 val maxGoalY = padTop + chartH - (avgMaxGoal / maxVal * chartH).toFloat()
@@ -167,8 +183,8 @@ class SpendingBarChartView @JvmOverloads constructor(
         }
 
         // ── Legend row 1: Budget / Spent / Over ─────────────────────────────
-        val legendY1  = padTop + chartH + 68f
-        val legendY2  = padTop + chartH + 96f
+        val legendY1  = padTop + chartH + 96f
+        val legendY2  = padTop + chartH + 124f
         val boxSize   = 14f
         val textGap   = 6f
 
@@ -228,8 +244,13 @@ class StatisticsActivity : BaseThemedActivity() {
 
     override fun onResume() {
         super.onResume()
-        val chipIds = mapOf("Week" to R.id.chip_week, "Month" to R.id.chip_month,
-            "3 Months" to R.id.chip_3months, "Year" to R.id.chip_year)
+        val chipIds = mapOf(
+            "Day"      to R.id.chip_day,
+            "Week"     to R.id.chip_week,
+            "Month"    to R.id.chip_month,
+            "3 Months" to R.id.chip_3months,
+            "Year"     to R.id.chip_year
+        )
         chipIds[currentPeriod]?.let { id ->
             runCatching { ThemeManager.tintBackground(findViewById(id), ThemeManager.getPalette(this).primary) }
         }
@@ -237,7 +258,7 @@ class StatisticsActivity : BaseThemedActivity() {
 
     private lateinit var repo: BudgetRepository
     private lateinit var insightAdapter: InsightAdapter
-    private var currentPeriod = "Week"
+    private var currentPeriod = "Month"   // ← default is now Month
     private var userId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -257,16 +278,23 @@ class StatisticsActivity : BaseThemedActivity() {
         }
 
         setupChips()
-        loadStatsFor("Week")
-        ThemeManager.tintBackground(findViewById(R.id.chip_week), ThemeManager.getPalette(this).primary)
+        // Load Month tab by default and highlight it
+        loadStatsFor("Month")
+        ThemeManager.tintBackground(findViewById(R.id.chip_month), ThemeManager.getPalette(this).primary)
+        // Reset week chip to unselected style
+        findViewById<TextView>(R.id.chip_week).apply {
+            setBackgroundResource(R.drawable.bg_chip_unselected)
+            setTextColor(getColor(R.color.text_secondary))
+        }
     }
 
     private fun setupChips() {
         val chips = mapOf(
-            R.id.chip_week    to "Week",
-            R.id.chip_month   to "Month",
-            R.id.chip_3months to "3 Months",
-            R.id.chip_year    to "Year"
+            R.id.chip_day      to "Day",
+            R.id.chip_week     to "Week",
+            R.id.chip_month    to "Month",
+            R.id.chip_3months  to "3 Months",
+            R.id.chip_year     to "Year"
         )
         chips.forEach { (id, label) ->
             findViewById<TextView>(id).setOnClickListener {
@@ -290,17 +318,22 @@ class StatisticsActivity : BaseThemedActivity() {
     private fun loadStatsFor(period: String) {
         val now = LocalDate.now()
         val fromDate = when (period) {
+            "Day"      -> now.toString()
             "Week"     -> now.minusDays(6)
             "Month"    -> now.withDayOfMonth(1)
             "3 Months" -> now.minusMonths(3).withDayOfMonth(1)
             "Year"     -> now.withDayOfYear(1)
             else       -> now.minusDays(6)
-        }.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        }.let {
+            if (it is LocalDate) it.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            else it as String
+        }
 
         lifecycleScope.launch {
             val total = repo.expenseDao.getTotalSince(userId, fromDate)
 
             val days = when (period) {
+                "Day"      -> 1L
                 "Week"     -> 7L
                 "Month"    -> now.dayOfMonth.toLong()
                 "3 Months" -> 90L
@@ -319,51 +352,64 @@ class StatisticsActivity : BaseThemedActivity() {
             val maxGoal = repo.loadOverallBudget(this@StatisticsActivity, userId)
             val minGoal = repo.loadMinGoal(this@StatisticsActivity, userId)
 
-            // Bar chart data — category view (non-week periods)
-            val barData = spending.take(6).map { s ->
-                val catBudget  = budgetMap[s.categoryName]?.amount ?: 0.0
-                val shortLabel = s.categoryEmoji.ifEmpty { s.categoryName.take(4) }
-                // Distribute min/max proportionally to category budget if available
-                val catMinGoal = if (maxGoal > 0 && catBudget > 0 && minGoal > 0)
-                    minGoal * (catBudget / maxGoal) else 0.0
-                SpendingBarChartView.Bar(shortLabel, s.total, catBudget, catMinGoal)
+            // ── Build category bar data (used for Month, 3M, Year, Week, Day) ──
+            // Each bar = one category: budget bar (grey) + spent bar (coloured)
+            // Min/max goal lines are drawn from the per-category proportional goals
+            fun buildCategoryBars(spendMultiplier: Double = 1.0): List<SpendingBarChartView.Bar> {
+                return spending.take(6).map { s ->
+                    val catBudget  = budgetMap[s.categoryName]?.amount ?: 0.0
+                    val emoji      = if (s.categoryEmoji.isNotEmpty()) s.categoryEmoji + " " else ""
+                    val shortLabel = emoji + s.categoryName.take(6)
+                    // For weekly/daily views, scale the monthly category budget proportionally
+                    val scaledBudget = if (catBudget > 0 && spendMultiplier < 1.0)
+                        catBudget * spendMultiplier else catBudget
+                    val catMinGoal = if (maxGoal > 0 && catBudget > 0 && minGoal > 0)
+                        minGoal * (catBudget / maxGoal) * (if (spendMultiplier < 1.0) spendMultiplier else 1.0)
+                    else 0.0
+                    SpendingBarChartView.Bar(shortLabel, s.total, scaledBudget, catMinGoal)
+                }
             }
 
-            val finalBarData: List<SpendingBarChartView.Bar> = if (period == "Week") {
-                val dailyTotals  = repo.expenseDao.getDailyTotals(userId, fromDate)
-                val dayNames     = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-                val dayMap       = dailyTotals.associateBy { it.date }
-                val totalMonthBudget = repo.budgetDao.getTotalBudgetForMonthNow(userId, currentMonth)
-                val dailyMaxGoal = if (maxGoal > 0) maxGoal / 30.0 else totalMonthBudget / 30.0
-                val dailyMinGoal = if (minGoal > 0) minGoal / 30.0 else 0.0
-                (0..6).map { offset ->
-                    val date     = now.minusDays((6 - offset).toLong())
-                    val dateStr  = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                    val spentAmt = dayMap[dateStr]?.total ?: 0.0
-                    SpendingBarChartView.Bar(
-                        dayNames[date.dayOfWeek.value - 1],
-                        spentAmt,
-                        dailyMaxGoal,
-                        dailyMinGoal
-                    )
+            // For daily tab: fetch only today's spending per category
+            val todayStr = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            val dailySpending = if (period == "Day") {
+                repo.expenseDao.getDailyTotals(userId, todayStr)
+            } else emptyList()
+
+            val finalBarData: List<SpendingBarChartView.Bar> = when (period) {
+                "Day" -> {
+                    // Show category breakdown for today using getDailyTotals gives only
+                    // date totals — so we use category spending filtered to today's date
+                    // by querying getByMonthNow and summing same-day entries, or simply
+                    // show category bars with today-proportional budget (1 day / month days)
+                    val daysInMonth = now.lengthOfMonth().toDouble()
+                    buildCategoryBars(spendMultiplier = 1.0 / daysInMonth)
                 }
-            } else barData
+                "Week" -> {
+                    // Show category breakdown for the week (more meaningful than 7 daily bars)
+                    // Scale monthly budget by 7/daysInMonth to get weekly budget
+                    val daysInMonth = now.lengthOfMonth().toDouble()
+                    buildCategoryBars(spendMultiplier = 7.0 / daysInMonth)
+                }
+                else -> buildCategoryBars(spendMultiplier = 1.0)
+            }
 
             // vs previous period
             val prevFromDate = when (period) {
-                "Week"     -> now.minusDays(13)
-                "Month"    -> now.minusMonths(1).withDayOfMonth(1)
-                "3 Months" -> now.minusMonths(6).withDayOfMonth(1)
-                "Year"     -> now.minusYears(1).withDayOfYear(1)
-                else       -> now.minusDays(13)
-            }.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                "Day"      -> now.minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                "Week"     -> now.minusDays(13).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                "Month"    -> now.minusMonths(1).withDayOfMonth(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                "3 Months" -> now.minusMonths(6).withDayOfMonth(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                "Year"     -> now.minusYears(1).withDayOfYear(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                else       -> now.minusDays(13).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            }
             val prevTotal = repo.expenseDao.getTotalSince(userId, prevFromDate)
             val vsLastPct = if (prevTotal > 0) ((total - prevTotal) / prevTotal * 100).toInt() else 0
             val vsText    = if (vsLastPct >= 0) "+$vsLastPct%" else "$vsLastPct%"
 
             val totalCatBudgets = budgets.sumOf { it.amount }
 
-            // Insights
+            // ── Insights ─────────────────────────────────────────────────────
             val insights = mutableListOf<Pair<String, String>>()
 
             if (total == 0.0) {
