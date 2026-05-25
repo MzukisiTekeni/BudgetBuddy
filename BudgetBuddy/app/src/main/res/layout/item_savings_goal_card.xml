@@ -113,10 +113,10 @@
             android:layout_height="36dp"
             android:text="💰  Add / Withdraw"
             android:textSize="@dimen/text_sm"
-            android:textColor="@color/primary"
+            android:textColor="@color/chip_selected_text"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:background="@drawable/bg_chip_unselected"
+            android:background="@drawable/bg_chip_selected"
             android:clickable="true"
             android:focusable="true" />
 
