@@ -6,11 +6,16 @@ on:
     branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
+  workflow_dispatch:
 
 jobs:
   build-and-test:
     name: Build & Test
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: BudgetBuddy
 
     steps:
 
@@ -54,7 +59,7 @@ jobs:
         if: always()
         with:
           name: test-results
-          path: app/build/reports/tests/
+          path: BudgetBuddy/app/build/reports/tests/
 
       # 8. Upload the built APK so you can download it from GitHub
       - name: Upload Debug APK
@@ -62,4 +67,4 @@ jobs:
         if: success()
         with:
           name: BudgetBuddy-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: BudgetBuddy/app/build/outputs/apk/debug/app-debug.apk
