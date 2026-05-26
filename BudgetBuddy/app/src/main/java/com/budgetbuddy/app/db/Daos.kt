@@ -258,6 +258,9 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications WHERE userId = :userId ORDER BY createdAt DESC")
     fun getAll(userId: Int): LiveData<List<NotificationEntity>>
 
+    @Query("SELECT * FROM notifications WHERE userId = :userId ORDER BY createdAt DESC")
+    suspend fun getAllNow(userId: Int): List<NotificationEntity>
+
     @Query("SELECT * FROM notifications WHERE userId = :userId AND tag = :tag ORDER BY createdAt DESC")
     fun getByTag(userId: Int, tag: String): LiveData<List<NotificationEntity>>
 

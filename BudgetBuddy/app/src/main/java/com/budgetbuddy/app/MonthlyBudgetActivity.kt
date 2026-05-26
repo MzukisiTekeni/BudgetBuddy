@@ -208,23 +208,28 @@ class MonthlyBudgetActivity : BaseThemedActivity() {
             .show()
     }
 
-    // ── Categories with no budget → notify ───────────────────────────────────
+    // ── Categories with no budget → notify (no duplicates) ──────────────────
     private fun checkCategoriesWithoutBudgets() {
         lifecycleScope.launch {
             val allCats   = repo.getActiveCategoriesNow(userId)
             val budgets   = repo.budgetDao.getByMonthNow(userId, month)
             val budgetIds = budgets.map { it.categoryId }.toSet()
             val missing   = allCats.filter { it.id !in budgetIds }
+            // Fetch existing notification titles to avoid duplicates
+            val existingTitles = repo.notificationDao.getAllNow(userId).map { it.title }.toSet()
             missing.forEach { cat ->
-                repo.addNotification(
-                    userId     = userId,
-                    icon       = "⚠️",
-                    title      = "Budget missing: ${cat.name}",
-                    body       = "No budget set for ${cat.emoji} ${cat.name} this month.",
-                    time       = SimpleDateFormat("h:mm a", java.util.Locale.getDefault()).format(Date()),
-                    tag        = "ALERT",
-                    groupLabel = "Reminders"
-                )
+                val title = "Budget missing: ${cat.name}"
+                if (title !in existingTitles) {
+                    repo.addNotification(
+                        userId     = userId,
+                        icon       = "⚠️",
+                        title      = title,
+                        body       = "No budget set for ${cat.emoji} ${cat.name} this month.",
+                        time       = SimpleDateFormat("h:mm a", java.util.Locale.getDefault()).format(Date()),
+                        tag        = "ALERT",
+                        groupLabel = "Reminders"
+                    )
+                }
             }
         }
     }
